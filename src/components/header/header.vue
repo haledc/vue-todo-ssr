@@ -22,8 +22,11 @@
     top 0
     left 0
     height 100px
+    flex 0 0 100px
     .title
       font-size 50px
+      font-weight bolder
+      font-family "Courier New"
       line-height 100px
       text-align center
 </style>

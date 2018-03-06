@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header></Header>
-    <todo></todo>
+    <todo/>
     <Footer></Footer>
   </div>
 </template>
@@ -23,8 +23,10 @@
 <style scoped lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   #app
     width 80%
-    height 600px
+    min-height 600px
     margin 50px auto
-    background yellow
+    background #c7edcc
     position relative
+    display flex
+    flex-direction column
 </style>

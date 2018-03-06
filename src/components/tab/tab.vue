@@ -51,11 +51,11 @@
   .tab
     display flex
     height 50px
-    font-size 16px
+    font-size 20px
+    line-height 40px
     .left
       flex 0 0 200px
       width 200px
-      box-sizing border-box
     .middle
       display inline-block
       flex 1
@@ -70,7 +70,6 @@
     .clear
       flex 0 0 200px
       width 200px
-      box-sizing border-box
       &:hover
         cursor pointer
 </style>

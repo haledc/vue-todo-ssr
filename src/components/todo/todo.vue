@@ -3,17 +3,21 @@
     <div class="content-wrapper">
       <div class="input">
         <input type="text"
+               id="text"
                class="text"
                autofocus="autofocus"
                placeholder="e.g. 今天要做什么?"
+               ref="text"
                @keyup.enter="addItem">
         <button type="submit" class="submit" @click="addItem">确认</button>
       </div>
-      <item-list
-        :item="item"
-        v-for="item in filterItems"
-        :key="item.id"
-        @delete="deleteItem"/>
+      <div class="item-wrapper">
+        <item
+          :item="item"
+          v-for="item in filterItems"
+          :key="item.id"
+          @delete="deleteItem"/>
+      </div>
       <tab :filter="filter"
            :items="items"
            @toggle="toggleFilter"
@@ -23,7 +27,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import ItemList from 'components/item-list/item-list'
+  import Item from 'components/item/item'
   import Tab from 'components/tab/tab'
 
   let id = 0
@@ -46,21 +50,21 @@
       }
     },
     methods: {
-      addItem(e) {
-        console.log(e.target.value)
-        if (e.target.value === ' ') {
-          alert('请输入文字！')
+      addItem() {
+        let content = document.getElementById('text').value.trim()
+        if (content === '') {
+          alert('请输入有效文字！')
           return
         }
         this.items.unshift({
           id: id++,
-          content: e.target.value.trim(),
+          content: content,
           isFinished: false
         })
-        e.target.value = ''
+        this.$refs.text.value = ''
       },
       deleteItem(id) {
-        const message = confirm('确定要删除吗')
+        const message = confirm('确定要删除吗？')
         if (message) {
           this.items.splice(this.items.findIndex(item => item.id === id), 1)
         }
@@ -70,10 +74,10 @@
       },
       clearALLFinishedItem() {
         if (this.items.filter(item => item.isFinished).length === 0) {
-          alert('没有已完成的项目')
+          alert('没有已完成的项目！')
           return
         }
-        const message = confirm('确定要删除已完成的项目吗')
+        const message = confirm('确定要删除已完成的项目吗？')
         if (message) {
           this.items = this.items.filter(item => !item.isFinished)
         }
@@ -83,7 +87,7 @@
       }
     },
     components: {
-      ItemList,
+      Item,
       Tab
     }
   }
@@ -91,11 +95,10 @@
 
 <style scoped lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   .todo
-    position absolute
     width 100%
-    height 440px
     top 100px
     overflow hidden
+    flex 1
     .content-wrapper
       width 80%
       margin 0 auto
@@ -110,6 +113,7 @@
           flex 1
           height 40px
           margin 10px 0
+          border-radius 5px
         .submit
           height 40px
           width 80px
