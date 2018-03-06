@@ -2,7 +2,7 @@
 
 > A Vue.js project
 
-![示例](https://github.com/haledc/vue-todo/app.png)
+![示例](https://github.com/haledc/vue-todo/blob/master/app.png)
 
 ## Build Setup
 
