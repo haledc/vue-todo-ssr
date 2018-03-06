@@ -51,7 +51,7 @@
     },
     methods: {
       addItem() {
-        let content = document.getElementById('text').value.trim()
+        let content = this.$refs.text.value.trim()
         if (content === '') {
           alert('请输入有效文字！')
           return
