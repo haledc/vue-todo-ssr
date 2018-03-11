@@ -1,11 +1,13 @@
 <template>
-  <div class="item" :class="{'finished':item.isFinished === true}">
-    <input type="checkbox" class="toggle" v-model="item.isFinished">
+  <div class="item" :class="{'finished':item.isCompleted === true}">
+    <span class="checkbox">
+      <input type="checkbox" v-model="item.isCompleted"/>
+    </span>
     <label class="content">{{item.content}}</label>
     <span class="operation">
-            <span class="delete" @click="deleteItem">删除</span>
-            <span class="detail" @click="showDetail">详细</span>
-          </span>
+      <span class="delete" @click="deleteItem">Delete</span>
+      <span class="detail" @click="showDetail">Detail</span>
+    </span>
   </div>
 </template>
 
@@ -30,34 +32,40 @@
 
 <style scoped lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   .item
-    display block
+    display flex
     height 40px
-    background #fff
     position relative
-    margin-bottom 10px
     border-radius 5px
+    border 1px solid #ccc
+    margin 0 20px 10px
     &.finished
       .content
         text-decoration line-through
-    .toggle
-      display inline-block
+    .checkbox
+      flex 0 0 20px
       width 20px
       height 40px
-      border-radius 50%
-    .content
-      display inline-block
-      vertical-align top
       line-height 40px
-      width 900px
-      font-size 20px
+      padding 0 10px
+      input
+        width 20px
+        height 40px
+    .content
+      flex 1
+      display inline-block
+      line-height 40px
     .operation
+      flex 0 0 150px
+      width 150px
       position absolute
       display inline-block
-      width 120px
       line-height 40px
       right 0
       text-align center
-      span:hover
-        cursor pointer
-
+      padding 0 10px
+      span
+        margin-left 10px
+        &:hover
+          cursor pointer
+          color #f00
 </style>

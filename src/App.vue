@@ -21,12 +21,8 @@
 </script>
 
 <style scoped lang="stylus" type="text/stylus" rel="stylesheet/stylus">
+  $deviceWidth = device-width
   #app
-    width 80%
-    min-height 600px
-    margin 50px auto
-    background #c7edcc
-    position relative
-    display flex
-    flex-direction column
+    width $deviceWidth
+    min-width 820px
 </style>

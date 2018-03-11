@@ -1,6 +1,6 @@
 <template>
   <div class="tab">
-    <span class="left">{{ unFinishedItemLength }}条待办项目</span>
+    <span class="left">{{ unFinishedItemLength }} item left</span>
     <span class="middle">
         <span class="state"
               v-for="state in states"
@@ -9,7 +9,7 @@
               @click="toggleFilter(state)">{{ state }}</span>
       </span>
     <span>
-        <span class="clear" @click="clearALLFinishedItem">清除已完成项目</span>
+        <span class="clear" v-show="isShowClear" @click="clearALLFinishedItem">clear completed</span>
       </span>
   </div>
 </template>
@@ -28,12 +28,19 @@
     },
     data() {
       return {
-        states: ['所有项目', '待办项目', '已完成项目']
+        states: ['All', 'Active', 'Completed']
       }
     },
     computed: {
       unFinishedItemLength() {
-        return this.items.filter(item => !item.isFinished).length
+        return this.items.filter(item => !item.isCompleted).length
+      },
+      isShowClear() {
+        if (this.items.filter(item => item.isCompleted).length > 0) {
+          return true
+        } else {
+          return false
+        }
       }
     },
     methods: {
@@ -51,8 +58,9 @@
   .tab
     display flex
     height 50px
-    font-size 20px
     line-height 40px
+    margin 0 20px
+    padding 0 10px
     .left
       flex 0 0 200px
       width 200px
@@ -67,9 +75,11 @@
           border 1px solid #f00
         &:hover
           cursor pointer
+          color #f00
     .clear
       flex 0 0 200px
       width 200px
       &:hover
         cursor pointer
+        color #f00
 </style>

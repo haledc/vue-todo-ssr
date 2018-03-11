@@ -18,11 +18,8 @@
 
 <style scoped lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   .header
-    width 100%
-    top 0
-    left 0
+    margin 0 auto
     height 100px
-    flex 0 0 100px
     .title
       font-size 50px
       font-weight bolder

@@ -13,11 +13,9 @@
 
 <style scoped lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   .footer
-    width 100%
     height 60px
-    flex 0 0 60px
+    margin 0 auto
     .content
-      /*margin 0 auto*/
       line-height 60px
       font-size 25px
       font-family "Courier New"
