@@ -28,7 +28,6 @@
 <script type="text/ecmascript-6">
   import Item from 'components/item/item'
   import Tab from 'components/tab/tab'
-  import {saveToLocal} from 'common/js/store'
 
   let id = 0
 
@@ -60,7 +59,6 @@
           content: content,
           isCompleted: false
         })
-        saveToLocal('hale', content, false)
         this.$refs.text.value = ''
       },
       deleteItem(id) {
