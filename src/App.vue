@@ -24,5 +24,5 @@
   $deviceWidth = device-width
   #app
     width $deviceWidth
-    min-width 820px
+    min-width 800px
 </style>

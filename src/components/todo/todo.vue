@@ -20,7 +20,7 @@
       <tab :filter="filter"
            :items="items"
            @toggle="toggleFilter"
-           @clear="clearALLFinishedItem"/>
+           @clear="clearAllCompletedItem"/>
     </div>
   </div>
 </template>
@@ -40,6 +40,9 @@
       }
     },
     computed: {
+      /**
+       * 筛选项目列表
+       */
       filterItems() {
         if (this.filter === 'All') {
           return this.items
@@ -49,6 +52,9 @@
       }
     },
     methods: {
+      /**
+       * 增加项目
+       */
       addItem() {
         let content = this.$refs.text.value.trim()
         if (content === '') {
@@ -61,6 +67,10 @@
         })
         this.$refs.text.value = ''
       },
+      /**
+       * 删除项目
+       * @param id
+       */
       deleteItem(id) {
         const message = confirm('Are you sure?')
         if (message) {
@@ -70,14 +80,14 @@
       toggleFilter(state) {
         this.filter = state
       },
-      clearALLFinishedItem() {
+      /**
+       * 清除完成项目
+       */
+      clearAllCompletedItem() {
         const message = confirm('Are you sure?')
         if (message) {
           this.items = this.items.filter(item => !item.isCompleted)
         }
-      },
-      showDetail() {
-        this.show = true
       }
     },
     components: {
@@ -115,9 +125,9 @@
             outline-color: #fff;
           }
         .submit
-          flex 0 0 120px
+          flex 0 0 100px
           height 40px
-          width 120px
+          width 100px
           text-align center
           font-family "Courier New"
           font-size 16px

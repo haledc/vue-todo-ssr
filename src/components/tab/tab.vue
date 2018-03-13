@@ -1,6 +1,6 @@
 <template>
   <div class="tab">
-    <span class="left">{{ unFinishedItemLength }} item left</span>
+    <span class="left">{{ activeItemLength }} item left</span>
     <span class="middle">
         <span class="state"
               v-for="state in states"
@@ -32,9 +32,16 @@
       }
     },
     computed: {
-      unFinishedItemLength() {
+      /**
+       * 活动项目数量
+       */
+      activeItemLength() {
         return this.items.filter(item => !item.isCompleted).length
       },
+      /**
+       * 是否显示清除选项
+       * @return {boolean}
+       */
       isShowClear() {
         if (this.items.filter(item => item.isCompleted).length > 0) {
           return true
@@ -62,14 +69,14 @@
     margin 0 20px
     padding 0 10px
     .left
-      flex 0 0 200px
-      width 200px
+      flex 0 0 120px
+      width 120px
     .middle
       display inline-block
       flex 1
       text-align center
       .state
-        margin 0 10px
+        margin 0 5px
         padding 0 5px
         &.active
           border 1px solid #f00
@@ -77,8 +84,8 @@
           cursor pointer
           color #f00
     .clear
-      flex 0 0 200px
-      width 200px
+      flex 0 0 150px
+      width 150px
       &:hover
         cursor pointer
         color #f00

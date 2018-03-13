@@ -6,7 +6,6 @@
     <label class="content">{{item.content}}</label>
     <span class="operation">
       <span class="delete" @click="deleteItem">Delete</span>
-      <span class="detail" @click="showDetail">Detail</span>
     </span>
   </div>
 </template>
@@ -16,9 +15,6 @@
     methods: {
       deleteItem() {
         this.$emit('delete', this.item.id)
-      },
-      showDetail() {
-        alert('功能待完善')
       }
     },
     props: {
@@ -55,8 +51,8 @@
       display inline-block
       line-height 40px
     .operation
-      flex 0 0 150px
-      width 150px
+      flex 0 0 80px
+      width 80px
       position absolute
       display inline-block
       line-height 40px
@@ -64,7 +60,6 @@
       text-align center
       padding 0 10px
       span
-        margin-left 10px
         &:hover
           cursor pointer
           color #f00
