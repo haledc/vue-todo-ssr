@@ -4,6 +4,8 @@
 
 ![示例](https://github.com/haledc/vue-todo/blob/master/app.png)
 
+[项目展示](https://haledc.github.io/vue-todo)
+
 ## Build Setup
 
 ``` bash
