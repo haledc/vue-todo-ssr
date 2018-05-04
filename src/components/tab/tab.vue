@@ -63,17 +63,16 @@
 
 <style scoped lang="stylus" type="text/stylus" rel="stylesheet/stylus">
   .tab
-    display flex
+    position relative
     height 50px
     line-height 40px
     margin 0 20px
     padding 0 10px
     .left
-      flex 0 0 120px
       width 120px
     .middle
+      margin-left 50px
       display inline-block
-      flex 1
       text-align center
       .state
         margin 0 5px
@@ -84,7 +83,8 @@
           cursor pointer
           color #f00
     .clear
-      flex 0 0 150px
+      position absolute
+      right 10px
       width 150px
       &:hover
         cursor pointer
