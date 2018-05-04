@@ -1,26 +1,38 @@
 <template>
-  <div class="todo">
-    <div class="content-wrapper">
-      <div class="input">
-        <input type="text"
-               class="text"
-               autofocus="autofocus"
-               placeholder="e.g. what do you want to?"
-               ref="text"
-               @keyup.enter="addItem">
-        <button type="submit" class="submit" @click="addItem">submit</button>
+  <div>
+    <div class="header">
+      <div class="title">
+        {{title}}
       </div>
-      <div class="item-wrapper">
-        <item
-          :item="item"
-          v-for="item in filterItems"
-          :key="item.id"
-          @delete="deleteItem"/>
+    </div>
+    <div class="todo">
+      <div class="content-wrapper">
+        <div class="input">
+          <input type="text"
+                 class="text"
+                 autofocus="autofocus"
+                 placeholder="e.g. what do you want to?"
+                 ref="text"
+                 @keyup.enter="addItem">
+          <button type="submit" class="submit" @click="addItem">submit</button>
+        </div>
+        <div class="item-wrapper">
+          <item
+            v-for="item in filterItems"
+            :key="item.id"
+            :item="item"
+            @delete="deleteItem"/>
+        </div>
+        <tab :filter="filter"
+             :items="items"
+             @toggle="toggleFilter"
+             @clear="clearAllCompletedItem"/>
       </div>
-      <tab :filter="filter"
-           :items="items"
-           @toggle="toggleFilter"
-           @clear="clearAllCompletedItem"/>
+    </div>
+    <div class="footer">
+      <div class="content">
+        Happy Everyday
+      </div>
     </div>
   </div>
 </template>
@@ -29,14 +41,21 @@
   import Item from 'components/item/item'
   import Tab from 'components/tab/tab'
 
-  let id = 0
-
   export default {
     data() {
       return {
+        title: 'My Todo',
         items: [],
         filter: 'All',
-        show: false
+        show: false,
+        lastestId: 0
+      }
+    },
+    created() {
+      let items = window.localStorage.getItem('todo')
+      if (items) {
+        this.items = JSON.parse(items)
+        this.lastestId = parseInt(this.items[0].id)
       }
     },
     computed: {
@@ -51,6 +70,11 @@
         return this.items.filter(item => finished === item.isCompleted)
       }
     },
+    watch: {
+      'items'() {
+        window.localStorage.setItem('todo', JSON.stringify(this.items))
+      }
+    },
     methods: {
       /**
        * 增加项目
@@ -60,11 +84,12 @@
         if (content === '') {
           return
         }
-        this.items.unshift({
-          id: id++,
+        let item = {
+          id: this.lastestId++,
           content: content,
           isCompleted: false
-        })
+        }
+        this.items.unshift(item)
         this.$refs.text.value = ''
       },
       /**
@@ -98,6 +123,16 @@
 </script>
 
 <style scoped lang="stylus" type="text/stylus" rel="stylesheet/stylus">
+  .header
+    margin 0 auto
+    height 100px
+    .title
+      font-size 50px
+      font-weight bolder
+      font-family "Courier New"
+      line-height 100px
+      text-align center
+
   .todo
     width 80%
     margin 0 auto
@@ -135,4 +170,13 @@
           &:hover
             cursor pointer
             color #f00
+
+  .footer
+    height 60px
+    margin 0 auto
+    .content
+      line-height 60px
+      font-size 25px
+      font-family "Courier New"
+      text-align center
 </style>
