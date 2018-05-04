@@ -1,20 +1,14 @@
 <template>
   <div id="app">
-    <Header></Header>
     <todo/>
-    <Footer></Footer>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import Header from 'components/header/header'
-  import Footer from 'components/footer/footer'
   import Todo from 'components/todo/todo'
 
   export default {
     components: {
-      Header,
-      Footer,
       Todo
     }
   }
