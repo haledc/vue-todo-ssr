@@ -1,0 +1,17 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    ".git",
+    ".idea",
+    "node_modules/**/node_modules",
+    ".eslintrc",
+    "build/webpacl.client.config.js",
+    "dist",
+    "server-dist"
+  ],
+  "verbose": true,
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "js ejs json"
+}
