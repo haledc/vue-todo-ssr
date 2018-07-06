@@ -1,16 +1,20 @@
-# About
-这是慕课网上[Vue+Webpack打造todo应用](https://www.imooc.com/learn/935)课程的源码
+# vue-todo-ssr
 
-# 使用方法
+> vue todo server side render
+
+## Build Setup
+
+``` bash
+# install dependencies
+yarn install
+or npm install
+
+# serve with hot reload at localhost:8080 in client side and localhost:8888 in the server in development environment
+yarn run dev
+
+# build for production with minification
+yarn run build
+
+# start server side render in production environment
+yarn run start
 ```
-git clone https://github.com/Jokcy/vue-todo-tech.git
-```
-进入项目目录，运行
-```
-npm install
-```
-然后执行
-```
-npm run dev
-```
-开始开发项目
