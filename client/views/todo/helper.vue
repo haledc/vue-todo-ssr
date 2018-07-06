@@ -1,15 +1,8 @@
 <template>
-  <div class="tab">
-    <span class="left">{{ activeItemLength }} item left</span>
-    <span class="middle">
-        <span class="state"
-              v-for="state in states"
-              :key="state"
-              :class="{'active': filter === state }"
-              @click="toggleFilter(state)">{{ state }}</span>
-      </span>
+  <div class="helper">
+    <span class="left">{{ activeItemLength }} {{activeItemLength > 1 ? 'items' : 'item'}} left</span>
     <span>
-        <span class="clear" v-show="isShowClear" @click="clearALLFinishedItem">clear completed</span>
+        <span class="clear" v-show="clearShow" @click="clearALLFinishedItem">clear completed</span>
       </span>
   </div>
 </template>
@@ -21,7 +14,7 @@
         type: String,
         require: true
       },
-      items: {
+      todos: {
         type: Array,
         require: true
       }
@@ -32,28 +25,14 @@
       }
     },
     computed: {
-      /**
-       * 活动项目数量
-       */
       activeItemLength() {
-        return this.items.filter(item => !item.isCompleted).length
+        return this.todos.filter(todo => !todo.completed).length
       },
-      /**
-       * 是否显示清除选项
-       * @return {boolean}
-       */
-      isShowClear() {
-        if (this.items.filter(item => item.isCompleted).length > 0) {
-          return true
-        } else {
-          return false
-        }
+      clearShow() {
+        return this.todos.filter(todo => todo.completed).length > 0
       }
     },
     methods: {
-      toggleFilter(state) {
-        this.$emit('toggle', state)
-      },
       clearALLFinishedItem() {
         this.$emit('clear')
       }
@@ -62,9 +41,10 @@
 </script>
 
 <style scoped lang="stylus">
-  .tab
+  .helper
     position relative
     height 50px
+    width auto
     line-height 40px
     margin 0 20px
     padding 0 10px

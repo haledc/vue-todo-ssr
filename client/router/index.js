@@ -9,11 +9,15 @@ export default function createRouter() {
     routes: [
       {
         path: '/',
-        redirect: '/app'
+        redirect: '/login'
+      },
+      {
+        path: '/login',
+        component: () => import(/* webpackChunkName: "login-view" */ '../views/login/login')
       },
       {
         path: '/app',
-        component: () => import('../components/todo/todo')
+        component: () => import(/* webpackChunkName: "todo-view" */ '../views/todo/todo')
       }
     ]
   })

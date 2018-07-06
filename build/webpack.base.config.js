@@ -1,24 +1,36 @@
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const path = require('path')
+const createVueLoaderOptions = require('./vue-loader.config')
 
-module.exports = {
-  entry: {
-    path: path.join(__dirname, '../client/main.js')
-  },
+const isDev = process.env.NODE_ENV === 'development'
+
+const baseConfig = {
+  target: 'web',
+  entry: path.join(__dirname, '../client/client-entry.js'),
   output: {
-    path: path.join(__dirname, '../dist'),
-    filename: 'static/js/[name]-[hash:8].js'
+    filename: 'bundle.[hash:8].js',
+    path: path.join(__dirname, '../client-dist'),
+    publicPath: 'http://127.0.0.1:8080/client-dist/'
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json']
+    extensions: ['.vue', '.js', '.json', '.jsx']
   },
   module: {
     rules: [
       {
-        test: /\.(vue|js)$/,
+        test: /\.(vue|js|jsx)$/,
         loader: 'eslint-loader',
         exclude: /node_modules/,
+        // 先处理
         enforce: 'pre'
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: createVueLoaderOptions(isDev)
+      },
+      {
+        test: /\.jsx$/,
+        loader: 'babel-loader'
       },
       {
         test: /\.js$/,
@@ -26,25 +38,19 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          compilerOptions: {
-            preserveWhitespace: true
+        test: /\.(gif|jpg|jpeg|png|svg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 1024,
+              name: 'static/images/[name].[hash:8].[ext]'
+            }
           }
-        }
-      },
-      {
-        test: /\.(jpg|png|gif|svg)$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: 'static/images/[name]-[hash:8].[ext]'
-        }
+        ]
       }
     ]
-  },
-  plugins: [
-    new VueLoaderPlugin()
-  ]
+  }
 }
+
+module.exports = baseConfig

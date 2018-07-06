@@ -2,16 +2,16 @@
   "restartable": "rs",
   "ignore": [
     ".git",
-    ".idea",
     "node_modules/**/node_modules",
     ".eslintrc",
-    "build/webpacl.client.config.js",
-    "dist",
-    "server-dist"
+    "client",
+    "build/webpack.config.client.js",
+    "public",
+    "server-build"
   ],
   "verbose": true,
   "env": {
     "NODE_ENV": "development"
   },
-  "ext": "js ejs json"
+  "ext": "js json ejs"
 }

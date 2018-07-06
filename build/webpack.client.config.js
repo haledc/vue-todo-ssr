@@ -1,112 +1,140 @@
-const merge = require('webpack-merge')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const webpack = require('webpack')
 const path = require('path')
-const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
-
+const HTMLPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const ExtractPlugin = require('extract-text-webpack-plugin')
+const UglifyJsWebpackPlugin = require('uglifyjs-webpack-plugin')
 const baseConfig = require('./webpack.base.config')
+const VueClientPlugin = require('vue-server-renderer/client-plugin')
 
-const isProd = process.env.NODE_ENV === 'production'
-let clientConfig
+const isDev = process.env.NODE_ENV === 'development'
 
-const commonModule = {
-  rules: [
-    {
-      test: /\.styl(us)?$/,
-      use: [
-        isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader',
-        'css-loader',
-        {
-          loader: 'postcss-loader',
-          options: {
-            sourceMap: true
-          }
-        },
-        'stylus-loader'
-      ]
+const defaultPlugins = [
+  new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: isDev ? '"development"' : '"production"'
     }
-  ]
-}
-
-const commonPlugins = [
-  new VueSSRClientPlugin()
+  }),
+  new VueClientPlugin()
 ]
 
 const devServer = {
-  inline: true,
-  hot: true,
-  host: '0.0.0.0',
   port: 8080,
+  host: '0.0.0.0',
   overlay: {
     errors: true
   },
-  // headers: { 'Access-Control-Allow-Origin': '*' },
+  headers: { 'Access-Control-Allow-Origin': '*' },
   historyApiFallback: {
-    rewrites: [{
-      from: /.*/g,
-      to: path.posix.join('/', 'index.html')
-    }]
+    index: '/client-dist/index.html'
+  },
+  hot: true,
+  proxy: {
+    '/api/*': 'http://127.0.0.1:8888',
+    '/user/*': 'http://127.0.0.1:8888'
   }
 }
 
-if (isProd) {
+let clientConfig
+
+if (isDev) {
+  // 开发环境
   clientConfig = merge(baseConfig, {
-    mode: process.env.NODE_ENV || 'production',
+    devtool: '#cheap-module-eval-source-map',
+    module: {
+      rules: [
+        {
+          test: /\.styl(us)?$/,
+          use: [
+            'vue-style-loader',
+            'css-loader',
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true
+              }
+            },
+            'stylus-loader'
+          ]
+        }
+      ]
+    },
+    devServer,
+    plugins: defaultPlugins.concat([
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoEmitOnErrorsPlugin(),
+      new HTMLPlugin({
+        template: path.join(__dirname, 'template.html')
+      })
+    ])
+  })
+} else {
+  // 生产环境
+  clientConfig = merge(baseConfig, {
+    entry: {
+      app: path.join(__dirname, '../client/client-entry.js'),
+      // 指定的第三方块入口
+      vendor: ['vue', 'vue-router', 'vuex']
+    },
     output: {
-      filename: 'static/js/[name]-[chunkhash:8].js'
+      filename: 'static/js/[name].[chunkhash:8].js',
+      publicPath: '/client-dist/'
     },
     module: {
-      ...commonModule
+      rules: [
+        {
+          test: /\.styl(us)?$/,
+          // 提取css
+          use: ExtractPlugin.extract({
+            fallback: 'vue-style-loader',
+            use: [
+              'css-loader',
+              {
+                loader: 'postcss-loader',
+                options: {
+                  sourceMap: true
+                }
+              },
+              'stylus-loader'
+            ]
+          })
+        }
+      ]
     },
-    optimization: {
-      // 分割块
-      splitChunks: {
-        chunks: 'all'
-      },
-      runtimeChunk: true
-    },
-    plugins: commonPlugins.concat([
-      new HtmlWebpackPlugin({
+    plugins: defaultPlugins.concat([
+      new UglifyJsWebpackPlugin(),
+      // 提取css
+      new ExtractPlugin('static/css/styles.[contentHash:8].css'),
+      // 分离第三方块
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor'
+      }),
+      // 分离运行块
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'runtime'
+      }),
+      // 使用块名称代替数字, 需要在路由中配置注释
+      new webpack.NamedChunksPlugin(),
+      new HTMLPlugin({
         template: path.join(__dirname, 'template.html'),
         filename: 'index.html',
-        inject: true,
+        // 压缩html
         minify: {
           collapseWhitespace: true,
           removeComments: true,
           removeAttributeQuotes: true
         }
-      }),
-      new MiniCssExtractPlugin({
-        filename: 'static/css/[name]-[contenthash:8].css',
-        chunkFilename: 'static/css/[id]-[contenthash:8].css'
-      }),
-      new OptimizeCssAssetsWebpackPlugin(),
-      new CleanWebpackPlugin(
-        [path.join(__dirname, '../dist/')],
-        {
-          root: path.join(__dirname, '../')
-        }
-      )
-    ])
-  })
-} else {
-  clientConfig = merge(baseConfig, {
-    mode: process.env.NODE_ENV || 'development',
-    module: {
-      ...commonModule
-    },
-    devServer,
-    plugins: commonPlugins.concat([
-      new HtmlWebpackPlugin({
-        template: path.join(__dirname, 'template.html'),
-        filename: 'index.html'
-      }),
-      new webpack.HotModuleReplacementPlugin()
+      })
     ])
   })
 }
+
+clientConfig = merge(clientConfig, {
+  resolve: {
+    alias: {
+      'api': path.join(__dirname, '../client/api/client-api.js')
+    }
+  }
+})
 
 module.exports = clientConfig

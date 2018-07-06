@@ -1,26 +1,35 @@
 <template>
-  <div class="item" :class="{'finished':item.isCompleted === true}">
+  <div class="item" :class="{'finished':todo.completed === true}">
     <span class="checkbox">
-      <input type="checkbox" v-model="item.isCompleted"/>
+      <input
+        type="checkbox"
+        :checked="todo.completed"
+        @click="toggleState"
+      />
     </span>
-    <label class="content">{{item.content}}</label>
+    <label class="content">{{todo.content}}</label>
     <span class="operation">
       <span class="delete" @click="deleteItem">Delete</span>
     </span>
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
   export default {
-    methods: {
-      deleteItem() {
-        this.$emit('delete', this.item.id)
-      }
-    },
     props: {
-      item: {
+      todo: {
         type: Object,
         require: true
+      }
+    },
+    methods: {
+      deleteItem() {
+        this.$emit('delete', this.todo.id)
+      },
+      toggleState(e) {
+        console.log(1)
+        e.preventDefault()
+        this.$emit('toggle', this.todo)
       }
     }
   }
@@ -29,6 +38,7 @@
 <style scoped lang="stylus">
   .item
     display flex
+    width auto
     height 40px
     position relative
     border-radius 5px
@@ -45,7 +55,7 @@
       padding 0 10px
       input
         width 20px
-        height 40px
+        height 34px
     .content
       flex 1
       display inline-block

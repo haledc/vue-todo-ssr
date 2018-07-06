@@ -2,7 +2,11 @@ import createApp from './create-app'
 
 export default context => {
   return new Promise((resolve, reject) => {
-    const {app, router} = createApp()
+    const {app, router, store} = createApp()
+
+    if (context.user) {
+      store.state.user = context.user
+    }
 
     router.push(context.url)
 
@@ -11,7 +15,23 @@ export default context => {
       if (!matchedComponents.length) {
         return reject(new Error('no component matched'))
       }
-      resolve(app)
+      Promise.all(matchedComponents.map(component => {
+        if (component.asyncData) {
+          return component.asyncData({
+            route: router.currentRoute,
+            router,
+            store
+          })
+        }
+      }))
+        .then(() => {
+          console.log(store.state)
+          // 把vue实例的meta方法赋值给服务端的context
+          context.meta = app.$meta()
+          context.state = store.state
+          context.router = router
+          resolve(app)
+        })
     })
   })
 }
