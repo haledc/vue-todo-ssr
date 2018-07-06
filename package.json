@@ -1,5 +1,5 @@
 {
-  "name": "vue-ssr-tech",
+  "name": "vue-todo-ssr",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -19,7 +19,7 @@
     "start": "cross-env NODE_ENV=production node server/app.js"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.17.1",
     "ejs": "^2.5.7",
