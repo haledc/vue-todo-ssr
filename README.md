@@ -9,7 +9,7 @@
 yarn install
 or npm install
 
-# serve with hot reload at localhost:8080 in client side and localhost:8888 in the server in development environment
+# serve with hot reload at localhost:8080 at client side and localhost:8888 at the server side in development environment
 yarn run dev
 
 # build for production with minification

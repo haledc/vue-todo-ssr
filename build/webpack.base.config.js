@@ -1,5 +1,6 @@
 const path = require('path')
 const createVueLoaderOptions = require('./vue-loader.config')
+const VueloaderPlugin = require('vue-loader/lib/plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -50,7 +51,10 @@ const baseConfig = {
         ]
       }
     ]
-  }
+  },
+  plugins: [
+    new VueloaderPlugin()
+  ]
 }
 
 module.exports = baseConfig
