@@ -17,6 +17,8 @@ export default {
     return api.getAllTodos()
       .then(data => {
         commit('endLoading')
+        // todo根据创建时间进行排序(ps:apiCloud的数据是无序的)
+        data = data.sort((x, y) => x.createdAt < y.createdAt)
         commit('filtTodos', data)
       })
       .catch(err => {
