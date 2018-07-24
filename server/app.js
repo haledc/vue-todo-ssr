@@ -70,7 +70,7 @@ if (isProd) {
 }
 
 const HOST = process.env.HOST || '0.0.0.0'
-const PORT = process.env.PORT || 8888
+const PORT = process.env.PORT || 8081
 
 app.listen(PORT, HOST, () => {
   console.log(`Server started at ${HOST}:${PORT}`)
