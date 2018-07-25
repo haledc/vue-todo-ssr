@@ -5,7 +5,13 @@
       <span class="error-msg" v-show="errorMsg">{{errorMsg}}</span>
     </h1>
     <input type="text" class="login-input" placeholder="Username" v-model="username">
-    <input type="password" class="login-input" placeholder="Password" v-model="password" autocomplete="new-password">
+    <input
+      type="password"
+      class="login-input"
+      placeholder="Password"
+      v-model="password"
+      autocomplete="new-password"
+    >
     <button type="submit" class="login-btn">Login</button>
   </form>
 </template>
@@ -17,8 +23,8 @@
     data() {
       return {
         errorMsg: '',
-        username: '',
-        password: ''
+        username: 'hale',
+        password: '123456'
       }
     },
     methods: {
