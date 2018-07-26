@@ -37,3 +37,7 @@ yarn build
 # 启动生产环境服务(127.0.0.1:8081打开服务端渲染)
 yarn start
 ```
+
+### 图片
+
+![](http://p5j8134h3.bkt.clouddn.com/vue-todo-ssr-show.png)
