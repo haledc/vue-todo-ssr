@@ -15,6 +15,7 @@ const defaultPlugins = [
       NODE_ENV: isDev ? '"development"' : '"production"'
     }
   }),
+  // 生成vue-ssr-client-manifest.json
   new VueClientPlugin()
 ]
 

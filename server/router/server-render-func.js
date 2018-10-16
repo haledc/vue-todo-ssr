@@ -1,6 +1,10 @@
+/**
+ * 服务端渲染方法
+ */
 const ejs = require('ejs')
 
 module.exports = async (ctx, renderer, template) => {
+  // 返回内容类型
   ctx.headers['Content-Type'] = 'text/html'
 
   // 获得上下文
@@ -11,12 +15,13 @@ module.exports = async (ctx, renderer, template) => {
     // 渲染上下文的String
     const appString = await renderer.renderToString(context)
 
-    // rredirect
+    // redirect
     const routerPath = context.router.currentRoute.fullPath
     if (routerPath !== ctx.path) {
       return ctx.redirect(routerPath)
     }
 
+    // 获取meta信息
     const {title} = context.meta.inject()
 
     // 把渲染后的代码手动注入到ejs模板中完成展示

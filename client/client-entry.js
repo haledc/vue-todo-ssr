@@ -1,3 +1,6 @@
+/**
+ * 浏览器渲染入口
+ */
 import createApp from './create-app'
 import bus from './utils/bus'
 

@@ -1,12 +1,11 @@
 const Koa = require('koa')
 const path = require('path')
 const send = require('koa-send')
-const body = require('koa-body')
+const bodyParser = require('koa-bodyparser')
 const session = require('koa-session')
 const logger = require('koa-logger')
 
 const devRouter = require('./router/dev-router')
-// const devRouterNoBundle = require('./router/dev-router-no-bundle')
 const prodRouter = require('./router/prod-router')
 const staticRouter = require('./router/static-router')
 const apiRouter = require('./router/api-router')
@@ -55,7 +54,7 @@ app.use(async (ctx, next) => {
   }
 })
 
-app.use(body())
+app.use(bodyParser())
 app.use(logger())
 
 app.use(userRouter.routes()).use(userRouter.allowedMethods())
@@ -66,7 +65,6 @@ if (isProd) {
   app.use(prodRouter.routes()).use(prodRouter.allowedMethods())
 } else {
   app.use(devRouter.routes()).use(devRouter.allowedMethods())
-  // app.use(devRouterNoBundle.routes()).use(devRouterNoBundle.allowedMethods())
 }
 
 const HOST = process.env.HOST || '0.0.0.0'
