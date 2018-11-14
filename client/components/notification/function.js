@@ -4,6 +4,7 @@ import Component from './notification-extend'
 // 实例扩展，生成构造函数
 const NotificationConstructor = Vue.extend(Component)
 
+// 实例数组
 const instances = []
 let seed = 1
 
@@ -11,7 +12,7 @@ let seed = 1
  * 在数组中删除实例
  * @param instance
  */
-const removeInstance = (instance) => {
+const removeInstance = instance => {
   if (!instance) return
   const len = instances.length
   const index = instances.findIndex(item => item.id === instance.id)
@@ -33,11 +34,11 @@ const removeInstance = (instance) => {
  * @param options
  * @return {CombinedVueInstance<CombinedVueInstance<Vue, any, any, any, Record<never, any>> & Vue, object, object, object, Record<never, any>> | *}
  */
-export default (options) => {
+const notify = options => {
   // 服务端渲染返回
   if (Vue.prototype.$isServer) return
 
-  const {closeTime, ...rest} = options
+  const { closeTime, ...rest } = options
 
   // 通过构造函数生成vue实例
   const instance = new NotificationConstructor({
@@ -49,6 +50,7 @@ export default (options) => {
 
   const id = `notification_${seed++}`
   instance.id = id
+
   // 挂载但不指明目标，生产一个dom
   instance.vm = instance.$mount()
 
@@ -87,3 +89,5 @@ export default (options) => {
 
   return instance.vm
 }
+
+export default notify

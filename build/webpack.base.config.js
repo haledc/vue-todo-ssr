@@ -1,6 +1,6 @@
 const path = require('path')
 const createVueLoaderOptions = require('./vue-loader.config')
-const VueloaderPlugin = require('vue-loader/lib/plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -30,11 +30,7 @@ const baseConfig = {
         options: createVueLoaderOptions(isDev)
       },
       {
-        test: /\.jsx$/,
-        loader: 'babel-loader'
-      },
-      {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         loader: 'babel-loader',
         exclude: /node_modules/
       },
@@ -53,7 +49,7 @@ const baseConfig = {
     ]
   },
   plugins: [
-    new VueloaderPlugin()
+    new VueLoaderPlugin()
   ]
 }
 

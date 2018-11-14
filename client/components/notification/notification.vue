@@ -14,46 +14,46 @@
 </template>
 
 <script>
-  export default {
-    name: 'Notification',
-    props: {
-      content: {
-        type: String,
-        required: true
-      },
-      btn: {
-        type: String,
-        default: '关闭'
-      }
+export default {
+  name: 'Notification',
+  props: {
+    content: {
+      type: String,
+      required: true
     },
-    data() {
-      return {
-        visible: true,
-        height: 0
-      }
+    btn: {
+      type: String,
+      default: '关闭'
+    }
+  },
+  data() {
+    return {
+      visible: true,
+      height: 0
+    }
+  },
+  computed: {
+    // 属性占位，用来给扩展组件替换
+    style() {
+      return {}
+    }
+  },
+  methods: {
+    handleClose() {
+      this.$emit('close')
     },
-    computed: {
-      // 属性占位，用来给扩展组件替换
-      style() {
-        return {}
-      }
+    afterLeave() {
+      this.$emit('closed')
     },
-    methods: {
-      handleClose() {
-        this.$emit('close')
-      },
-      afterLeave() {
-        this.$emit('closed')
-      },
-      // 方法占位，用来给扩展组件替换
-      afterEnter() {
-      },
-      clearTimer() {
-      },
-      createTimer() {
-      }
+    // 方法占位，用来给扩展组件替换
+    afterEnter() {
+    },
+    clearTimer() {
+    },
+    createTimer() {
     }
   }
+}
 </script>
 
 <style lang="stylus" scoped>
@@ -74,4 +74,8 @@
       padding-left 24px
       margin-left auto
       cursor pointer
+    &.fade-enter-active, &.fade-leave-active
+      transition opacity 0.5s
+    &.fade-enter, &.fade-leave-to
+      opacity 0
 </style>

@@ -3,7 +3,7 @@ module.exports = (isDev) => {
     return {
       compilerOptions: {
         // 删除多余空格
-        preserveWhitepace: true
+        preserveWhiteSpace: true
       }
     }
   }
