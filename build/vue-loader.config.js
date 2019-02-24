@@ -1,5 +1,5 @@
-module.exports = (isDev) => {
-  if (isDev) {
+module.exports = isProd => {
+  if (!isProd) {
     return {
       compilerOptions: {
         // 删除多余空格

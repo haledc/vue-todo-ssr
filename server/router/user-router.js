@@ -1,6 +1,6 @@
 const Router = require('koa-router')
 
-const router = new Router({prefix: '/user'})
+const router = new Router({ prefix: '/user' })
 
 router.post('/login', async ctx => {
   const user = ctx.request.body

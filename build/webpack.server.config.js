@@ -1,6 +1,5 @@
 const path = require('path')
-const ExtractPlugin = require('extract-text-webpack-plugin')
-const webpack = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base.config')
 const VueServerPlugin = require('vue-server-renderer/server-plugin')
@@ -20,34 +19,31 @@ const serverConfig = merge(baseConfig, {
   externals: Object.keys(require('../package').dependencies),
   resolve: {
     alias: {
-      'api': path.join(__dirname, '../client/api/server-api.js')
+      api: path.join(__dirname, '../client/api/server-api.js')
     }
   },
   module: {
     rules: [
       {
         test: /\.styl(us)?$/,
-        use: ExtractPlugin.extract({
-          fallback: 'vue-style-loader',
-          use: [
-            'css-loader',
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true
-              }
-            },
-            'stylus-loader'
-          ]
-        })
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          'stylus-loader'
+        ]
       }
     ]
   },
   plugins: [
-    new ExtractPlugin('styles.[contentHash:8].css'),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-      'process.env.VUE_ENV': '"server"'
+    new MiniCssExtractPlugin({
+      filename: 'static/css/[name]-[contenthash:8].css',
+      chunkFilename: 'static/css/[id]-[contenthash:8].css'
     }),
     new VueServerPlugin()
   ]

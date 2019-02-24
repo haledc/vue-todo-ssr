@@ -13,7 +13,7 @@ const createError = (code, res) => {
   return err
 }
 
-const handleRequest = ({status, data, ...rest}) => {
+const handleRequest = ({ status, data, ...rest }) => {
   if (status === 200) {
     return data
   } else {
@@ -31,30 +31,26 @@ module.exports = (appId, appKey) => {
   }
   return {
     async getAllTodos() {
-      return handleRequest(await request.get(
-        `/${className}`,
-        {headers: getHeaders()}
-      ))
+      return handleRequest(
+        await request.get(`/${className}`, { headers: getHeaders() })
+      )
     },
     async addTodo(todo) {
-      return handleRequest(await request.post(
-        `/${className}`,
-        todo,
-        {headers: getHeaders()}
-      ))
+      return handleRequest(
+        await request.post(`/${className}`, todo, { headers: getHeaders() })
+      )
     },
     async updateTodo(id, todo) {
-      return handleRequest(await request.put(
-        `/${className}/${id}`,
-        todo,
-        {headers: getHeaders()}
-      ))
+      return handleRequest(
+        await request.put(`/${className}/${id}`, todo, {
+          headers: getHeaders()
+        })
+      )
     },
     async deleteTodo(id) {
-      return handleRequest(await request.delete(
-        `/${className}/${id}`,
-        {headers: getHeaders()}
-      ))
+      return handleRequest(
+        await request.delete(`/${className}/${id}`, { headers: getHeaders() })
+      )
     },
     async deleteCompleted(ids) {
       // requests是默认变量名，不能更改
@@ -64,11 +60,9 @@ module.exports = (appId, appKey) => {
           path: `/mcm/api/${className}/${id}`
         }
       })
-      return handleRequest(await request.post(
-        '/batch',
-        {requests},
-        {headers: getHeaders()}
-      ))
+      return handleRequest(
+        await request.post('/batch', { requests }, { headers: getHeaders() })
+      )
     }
   }
 }

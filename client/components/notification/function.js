@@ -25,14 +25,15 @@ const removeInstance = instance => {
   const removeHeight = instance.vm.height
   // 最终的高度需要减去删除实例的高度和间隙
   for (let i = index; i < len - 1; i++) {
-    instances[i].verticalOffset = parseInt(instances[i].verticalOffset) - removeHeight - 16
+    instances[i].verticalOffset =
+      parseInt(instances[i].verticalOffset) - removeHeight - 16
   }
 }
 
 /**
  * 输出方法
  * @param options
- * @return {CombinedVueInstance<CombinedVueInstance<Vue, any, any, any, Record<never, any>> & Vue, object, object, object, Record<never, any>> | *}
+ * @return vm
  */
 const notify = options => {
   // 服务端渲染返回
@@ -83,7 +84,7 @@ const notify = options => {
     instance.vm.$destroy()
   })
 
-  instance.vm.$on('close', function () {
+  instance.vm.$on('close', function() {
     this.visible = false
   })
 

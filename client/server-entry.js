@@ -20,23 +20,24 @@ export default context => {
         return reject(new Error('no component matched'))
       }
 
-      Promise.all(matchedComponents.map(component => {
-        if (component.asyncData) {
-          return component.asyncData({
-            route: router.currentRoute,
-            router,
-            store
-          })
-        }
-      }))
-        .then(() => {
-          console.log(store.state)
-          // 把vue实例的meta方法赋值给服务端的context
-          context.meta = app.$meta()
-          context.state = store.state
-          context.router = router
-          resolve(app)
+      Promise.all(
+        matchedComponents.map(component => {
+          if (component.asyncData) {
+            return component.asyncData({
+              route: router.currentRoute,
+              router,
+              store
+            })
+          }
         })
+      ).then(() => {
+        // console.log(store.state)
+        // 把vue实例的meta方法赋值给服务端的context
+        context.meta = app.$meta()
+        context.state = store.state
+        context.router = router
+        resolve(app)
+      })
     })
   })
 }

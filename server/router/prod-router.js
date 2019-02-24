@@ -16,15 +16,15 @@ const handleSSR = async ctx => {
   const clientManifest = require('../../client-dist/vue-ssr-client-manifest')
 
   // 生成renderer
-  const renderer = createBundleRenderer(
-    bundle,
-    {
-      inject: false,
-      clientManifest
-    }
-  )
+  const renderer = createBundleRenderer(bundle, {
+    inject: false,
+    clientManifest
+  })
 
-  const template = fs.readFileSync(path.join(__dirname, '../server.template.ejs'), 'utf-8')
+  const template = fs.readFileSync(
+    path.join(__dirname, '../server.template.ejs'),
+    'utf-8'
+  )
 
   await serverRender(ctx, renderer, template)
 }

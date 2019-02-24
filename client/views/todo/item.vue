@@ -27,7 +27,6 @@
         this.$emit('delete', this.todo.id)
       },
       toggleState(e) {
-        console.log(1)
         e.preventDefault()
         this.$emit('toggle', this.todo)
       }

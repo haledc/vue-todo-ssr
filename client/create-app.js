@@ -28,5 +28,5 @@ export default function createApp() {
     render: h => h(App)
   })
 
-  return {app, router, store}
+  return { app, router, store }
 }

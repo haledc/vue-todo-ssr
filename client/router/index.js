@@ -13,11 +13,13 @@ export default function createRouter() {
       },
       {
         path: '/login',
-        component: () => import(/* webpackChunkName: "login-view" */ '../views/login/login')
+        component: () =>
+          import(/* webpackChunkName: "login-view" */ '../views/login/login')
       },
       {
         path: '/app',
-        component: () => import(/* webpackChunkName: "todo-view" */ '../views/todo/todo')
+        component: () =>
+          import(/* webpackChunkName: "todo-view" */ '../views/todo/todo')
       }
     ]
   })

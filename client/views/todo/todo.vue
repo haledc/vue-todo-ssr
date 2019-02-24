@@ -33,7 +33,7 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
+<script>
   import Item from '../../views/todo/item'
   import Helper from '../../views/todo/helper'
   import {mapGetters, mapActions} from 'vuex'

@@ -28,7 +28,9 @@ let bundle
 // 监听事件 类似webpack --watch
 // 主要是从内存中拿到bundle
 serverCompiler.watch(
-  { /* 选项 */ },
+  {
+    /* 选项 */
+  },
   (err, stats) => {
     if (err) throw err
     stats = stats.toJson()
@@ -36,33 +38,39 @@ serverCompiler.watch(
     stats.warnings.forEach(() => console.warn(err))
 
     // 从内存中读取bundle
-    const bundlePath = path.join(serverConfig.output.path, 'vue-ssr-server-bundle.json')
+    const bundlePath = path.join(
+      serverConfig.output.path,
+      'vue-ssr-server-bundle.json'
+    )
     bundle = JSON.parse(mfs.readFileSync(bundlePath, 'utf-8'))
     console.log('new bundle generated')
-  })
+  }
+)
 
-// 处理SSR方法
+// 处理 SSR 方法
 const handleSSR = async ctx => {
   if (!bundle) {
     ctx.body = '正在生成bundle，请再等一会儿！'
     return
   }
 
-  // 从devServer中获取clientManifest， 通过axios获取
-  const clientManifestResponse = await axios.get('http://127.0.0.1:8080/client-dist/vue-ssr-client-manifest.json')
+  // 从 devServer 中获取 clientManifest， 通过axios获取
+  const clientManifestResponse = await axios.get(
+    'http://127.0.0.1:8080/client-dist/vue-ssr-client-manifest.json'
+  )
   const clientManifest = clientManifestResponse.data
 
-  // 从硬盘中读取template
-  const template = fs.readFileSync(path.join(__dirname, '../server.template.ejs'), 'utf-8')
+  // 从硬盘中读取 template
+  const template = fs.readFileSync(
+    path.join(__dirname, '../server.template.ejs'),
+    'utf-8'
+  )
 
   // 生成renderer
-  const renderer = createBundleRenderer(
-    bundle,
-    {
-      inject: false,
-      clientManifest
-    }
-  )
+  const renderer = createBundleRenderer(bundle, {
+    inject: false,
+    clientManifest
+  })
 
   // 渲染的具体方法(生产和开发环境共用)
   await serverRender(ctx, renderer, template)

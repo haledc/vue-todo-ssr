@@ -1,12 +1,12 @@
 import axios from 'axios'
 
-import {createError} from '../utils/utils'
+import { createError } from '../utils/utils'
 
 const request = axios.create({
   baseURL: '/'
 })
 
-const handleRequest = (request) => {
+const handleRequest = request => {
   return new Promise((resolve, reject) => {
     request
       .then(res => {
@@ -34,7 +34,7 @@ export default {
     return handleRequest(request.get('/api/todos'))
   },
   login(username, password) {
-    return handleRequest(request.post('/user/login', {username, password}))
+    return handleRequest(request.post('/user/login', { username, password }))
   },
   addTodo(todo) {
     return handleRequest(request.post('/api/todo', todo))
@@ -46,6 +46,6 @@ export default {
     return handleRequest(request.delete(`/api/todo/${id}`))
   },
   deleteCompleted(ids) {
-    return handleRequest(request.post('/api/delete/completed', {ids}))
+    return handleRequest(request.post('/api/delete/completed', { ids }))
   }
 }

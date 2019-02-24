@@ -1,6 +1,6 @@
 const Router = require('koa-router')
 
-const router = new Router({prefix: '/api'})
+const router = new Router({ prefix: '/api' })
 
 const validateUser = async (ctx, next) => {
   if (!ctx.session.user) {

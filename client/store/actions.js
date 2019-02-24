@@ -2,7 +2,7 @@ import api from 'api'
 import notify from '../components/notification/function'
 import bus from '../utils/bus'
 
-const handleError = (err) => {
+const handleError = err => {
   if (err.code === 401) {
     notify({
       content: '请先登录！'
@@ -12,22 +12,24 @@ const handleError = (err) => {
 }
 
 export default {
-  fetchTodos: ({commit}) => {
+  fetchTodos: ({ commit }) => {
     commit('startLoading')
-    return api.getAllTodos()
+    return api
+      .getAllTodos()
       .then(data => {
         commit('endLoading')
         // todo根据创建时间进行排序(ps:apiCloud的数据是无序的)
         data = data.sort((x, y) => x.createdAt < y.createdAt)
-        commit('filtTodos', data)
+        commit('filterTodos', data)
       })
       .catch(err => {
         commit('endLoading')
         handleError(err)
       })
   },
-  addTodo: ({commit}, todo) => {
-    api.addTodo(todo)
+  addTodo: ({ commit }, todo) => {
+    api
+      .addTodo(todo)
       .then(data => {
         commit('addTodo', data)
         notify({
@@ -38,10 +40,11 @@ export default {
         handleError(err)
       })
   },
-  updateTodo: ({commit}, {id, todo}) => {
-    api.updateTodo(id, todo)
+  updateTodo: ({ commit }, { id, todo }) => {
+    api
+      .updateTodo(id, todo)
       .then(data => {
-        commit('updateTodo', {id, todo: data})
+        commit('updateTodo', { id, todo: data })
         notify({
           content: '你更新了一件事！'
         })
@@ -50,8 +53,9 @@ export default {
         handleError(err)
       })
   },
-  deleteTodo: ({commit}, id) => {
-    api.deleteTodo(id)
+  deleteTodo: ({ commit }, id) => {
+    api
+      .deleteTodo(id)
       .then(() => {
         commit('deleteTodo', id)
         notify({
@@ -62,10 +66,10 @@ export default {
         handleError(err)
       })
   },
-  deleteCompleted: ({commit, state}) => {
+  deleteCompleted: ({ commit, state }) => {
     const ids = state.todos.filter(t => t.completed).map(t => t.id)
-    console.log(ids)
-    api.deleteCompleted(ids)
+    api
+      .deleteCompleted(ids)
       .then(() => {
         commit('deleteCompleted')
         notify({
@@ -76,9 +80,10 @@ export default {
         handleError(err)
       })
   },
-  login: ({commit}, {username, password}) => {
+  login: ({ commit }, { username, password }) => {
     return new Promise((resolve, reject) => {
-      api.login(username, password)
+      api
+        .login(username, password)
         .then(data => {
           commit('doLogin', data)
           notify({

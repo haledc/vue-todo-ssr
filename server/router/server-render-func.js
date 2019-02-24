@@ -8,14 +8,14 @@ module.exports = async (ctx, renderer, template) => {
   ctx.headers['Content-Type'] = 'text/html'
 
   // 获得上下文
-  // 通过session获得user的信息
+  // 通过 session 获得 user 的信息
   const context = { url: ctx.path, user: ctx.session.user }
-  console.log('----------------', context)
+  // console.log('----------------', context)
 
   try {
     // 渲染上下文的String
     const appString = await renderer.renderToString(context)
-    console.log('appString------------', appString)
+    // console.log('appString------------', appString)
 
     // redirect
     const routerPath = context.router.currentRoute.fullPath

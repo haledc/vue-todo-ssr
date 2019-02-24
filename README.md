@@ -1,15 +1,15 @@
 # vue-todo-ssr
 
-> vue-todo使用了服务端渲染
+> vue-todo 使用了服务端渲染
 
 ### 技术栈
 
-**vue全家桶 + vue服务端渲染 + koa + APICloud**
+**vue 全家桶 + vue 服务端渲染 + koa + APICloud**
 
 ### 说明
 
-- 学习了vue服务端渲染课程后改进了以前写的todo应用。
-- 使用的是Bundle Render 和手动注入模板的方式。
+- 学习了 vue 服务端渲染课程后改进了以前写的 todo 应用。
+- 使用的是 Bundle Render 和手动注入模板的方式。
 - [演示地址](http://todo.haledeng.com)
 
 ### 项目结构
