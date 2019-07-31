@@ -29,13 +29,13 @@ app.use(async (ctx, next) => {
   try {
     console.log(`request with path is ${ctx.path}`)
     await next()
-  } catch (err) {
-    console.log(err)
+  } catch (error) {
+    console.log(error)
     ctx.status = 500
     if (isProd) {
       ctx.body = 'please try again later'
     } else {
-      ctx.body = err.message
+      ctx.body = error.message
     }
   }
 })

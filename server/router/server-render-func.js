@@ -13,7 +13,7 @@ module.exports = async (ctx, renderer, template) => {
   // console.log('----------------', context)
 
   try {
-    // 渲染上下文的String
+    // 渲染上下文的 String
     const appString = await renderer.renderToString(context)
     // console.log('appString------------', appString)
 
@@ -23,10 +23,10 @@ module.exports = async (ctx, renderer, template) => {
       return ctx.redirect(routerPath)
     }
 
-    // 获取meta信息
+    // 获取 meta 信息
     const { title } = context.meta.inject()
 
-    // 把渲染后的代码手动注入到ejs模板中完成展示
+    // 把渲染后的代码手动注入到 ejs 模板中完成展示
     const html = ejs.render(template, {
       title: title.text(),
       // 渲染后的字符串
@@ -40,8 +40,8 @@ module.exports = async (ctx, renderer, template) => {
     })
 
     ctx.body = html
-  } catch (err) {
-    console.log('render error: ', err.message)
-    throw err
+  } catch (error) {
+    console.log('render error: ', error.message)
+    throw error
   }
 }

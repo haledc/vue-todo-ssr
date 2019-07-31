@@ -1,16 +1,16 @@
 const sha1 = require('sha1')
 const axios = require('axios')
 
-const className = 'todo'
+const CLASS_NAME = 'todo'
 
 const request = axios.create({
   baseURL: 'https://d.apicloud.com/mcm/api'
 })
 
 const createError = (code, res) => {
-  const err = new Error(res.message)
-  err.code = code
-  return err
+  const error = new Error(res.message)
+  error.code = code
+  return error
 }
 
 const handleRequest = ({ status, data, ...rest }) => {
@@ -32,24 +32,24 @@ module.exports = (appId, appKey) => {
   return {
     async getAllTodos() {
       return handleRequest(
-        await request.get(`/${className}`, { headers: getHeaders() })
+        await request.get(`/${CLASS_NAME}`, { headers: getHeaders() })
       )
     },
     async addTodo(todo) {
       return handleRequest(
-        await request.post(`/${className}`, todo, { headers: getHeaders() })
+        await request.post(`/${CLASS_NAME}`, todo, { headers: getHeaders() })
       )
     },
     async updateTodo(id, todo) {
       return handleRequest(
-        await request.put(`/${className}/${id}`, todo, {
+        await request.put(`/${CLASS_NAME}/${id}`, todo, {
           headers: getHeaders()
         })
       )
     },
     async deleteTodo(id) {
       return handleRequest(
-        await request.delete(`/${className}/${id}`, { headers: getHeaders() })
+        await request.delete(`/${CLASS_NAME}/${id}`, { headers: getHeaders() })
       )
     },
     async deleteCompleted(ids) {
@@ -57,7 +57,7 @@ module.exports = (appId, appKey) => {
       const requests = ids.map(id => {
         return {
           method: 'DELETE',
-          path: `/mcm/api/${className}/${id}`
+          path: `/mcm/api/${CLASS_NAME}/${id}`
         }
       })
       return handleRequest(

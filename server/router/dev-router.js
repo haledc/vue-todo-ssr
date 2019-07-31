@@ -1,6 +1,5 @@
 /**
  * 开发环境服务端渲染路由
- * @type {Router}
  */
 const Router = require('koa-router')
 const axios = require('axios')
@@ -13,10 +12,10 @@ const fs = require('fs')
 const serverConfig = require('../../build/webpack.server.config')
 const serverRender = require('./server-render-func')
 
-// 生成mfs对象
+// 生成 mfs 对象
 const mfs = new MemoryFS()
 
-// 打包server文件，生成compiler实例对象
+// 打包 server 文件，生成 compiler 实例对象
 const serverCompiler = webpack(serverConfig)
 
 // 打包的输出文件保存到内存中
@@ -25,19 +24,19 @@ serverCompiler.outputFileSystem = mfs
 // vue-ssr-server-bundle.json
 let bundle
 
-// 监听事件 类似webpack --watch
-// 主要是从内存中拿到bundle
+// 监听事件 类似 webpack --watch
+// 主要是从内存中拿到 bundle
 serverCompiler.watch(
   {
     /* 选项 */
   },
-  (err, stats) => {
-    if (err) throw err
+  (error, stats) => {
+    if (error) throw error
     stats = stats.toJson()
-    stats.errors.forEach(err => console.log(err))
-    stats.warnings.forEach(() => console.warn(err))
+    stats.errors.forEach(error => console.log(error))
+    stats.warnings.forEach(() => console.warn(error))
 
-    // 从内存中读取bundle
+    // 从内存中读取 bundle
     const bundlePath = path.join(
       serverConfig.output.path,
       'vue-ssr-server-bundle.json'
@@ -54,7 +53,7 @@ const handleSSR = async ctx => {
     return
   }
 
-  // 从 devServer 中获取 clientManifest， 通过axios获取
+  // 从 devServer 中获取 clientManifest， 通过 axios 获取
   const clientManifestResponse = await axios.get(
     'http://127.0.0.1:8080/client-dist/vue-ssr-client-manifest.json'
   )
@@ -66,13 +65,13 @@ const handleSSR = async ctx => {
     'utf-8'
   )
 
-  // 生成renderer
+  // 生成 renderer
   const renderer = createBundleRenderer(bundle, {
     inject: false,
     clientManifest
   })
 
-  // 渲染的具体方法(生产和开发环境共用)
+  // 渲染的具体方法 (生产和开发环境共用)
   await serverRender(ctx, renderer, template)
 }
 
