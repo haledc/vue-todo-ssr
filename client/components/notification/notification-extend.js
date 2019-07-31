@@ -4,8 +4,7 @@
 import Notification from './notification'
 
 export default {
-  // 组件扩展
-  extends: Notification,
+  extends: Notification, // 组件扩展
   computed: {
     style() {
       return {
@@ -26,9 +25,7 @@ export default {
     this.createTimer()
   },
   methods: {
-    /**
-     * 定时关闭
-     */
+    // 定时关闭
     createTimer() {
       if (this.closeTime) {
         this.timer = setTimeout(() => {
@@ -36,17 +33,15 @@ export default {
         }, this.closeTime)
       }
     },
-    /**
-     * 清除定时器
-     */
+
+    // 清除定时器
     clearTimer() {
       if (this.timer) {
         clearTimeout(this.timer)
       }
     },
-    /**
-     * 每个实例的高度赋值给height
-     */
+
+    // 每个实例的高度赋值给 height
     afterEnter() {
       this.height = this.$el.offsetHeight
     }

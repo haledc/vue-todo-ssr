@@ -1,9 +1,5 @@
 <template>
-  <transition
-    name="fade"
-    @after-leave="afterLeave"
-    @after-enter="afterEnter"
-  >
+  <transition name="fade" @after-leave="afterLeave" @after-enter="afterEnter">
     <div
       class="notification"
       :style="style"
@@ -11,11 +7,8 @@
       @mouseenter="clearTimer"
       @mouseleave="createTimer"
     >
-      <div class="content">{{content}}</div>
-      <div
-        class="btn"
-        @click="handleClose"
-      >{{btn}}</div>
+      <div class="content">{{ content }}</div>
+      <div class="btn" @click="handleClose">{{ btn }}</div>
     </div>
   </transition>
 </template>
@@ -68,9 +61,10 @@ export default {
   align-items: center
   padding: 20px
   min-width: 280px
-  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12)
   flex-wrap: wrap
   transition: all 0.3s
+  border-radius: 10px
 
   .content
     padding: 0

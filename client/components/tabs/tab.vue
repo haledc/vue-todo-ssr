@@ -12,33 +12,34 @@ export default {
     }
   },
   mounted() {
-    // 把本组件添加到父组件中
-    this.$parent.panes.push(this)
+    this.$parent.panes.push(this) // 挂载子组件时把本组件添加到父组件中
   },
   computed: {
     active() {
-      // 父组件的value和本组件的index一致时设为active
-      return this.$parent.value === this.index
+      return this.$parent.value === this.index // 父组件的 value 和本组件的 index 一致时设为 active
     }
   },
   methods: {
     handleClick() {
-      // 调用父组件的方法，但是传入的是本组件的值
-      this.$parent.onChange(this.index)
+      this.$parent.onChange(this.index) // 调用父组件的方法，但是传入的是本组件的值
     }
   },
   render(h) {
-    // 设为label插槽来填值或者直接填入值
-    const tab = this.$slots.label || <span>{this.label}</span>
+    const tab = this.$slots.label || <span>{this.label}</span> // 设为 label 插槽来填值或者直接填入值
     const classNames = {
       tab: true,
       active: this.active
     }
-    return (
-      <li class={classNames} on-click={this.handleClick}>
-        {tab}
-      </li>
-    )
+
+    // return (
+    //   <li class={classNames} on-click={this.handleClick}>
+    //     {tab}
+    //   </li>
+    // )
+
+    return h('li', { class: classNames, on: { click: this.handleClick } }, [
+      tab
+    ])
   }
 }
 </script>
@@ -58,4 +59,3 @@ export default {
   &:last-child
     margin-right: 0
 </style>
-

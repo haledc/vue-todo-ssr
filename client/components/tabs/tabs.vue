@@ -23,12 +23,17 @@ export default {
     }
   },
   render(h) {
-    return (
-      <div class="tabs">
-        <ul class="tabs-header">{this.$slots.default}</ul>
-        <tab-container panes={this.panes} />
-      </div>
-    )
+    // return (
+    //   <div class="tabs">
+    //     <ul class="tabs-header">{this.$slots.default}</ul>
+    //     <tab-container panes={this.panes} />
+    //   </div>
+    // )
+
+    return h('div', { class: 'tabs' }, [
+      h('ul', { class: 'tabs-header' }, this.$slots.default),
+      h(TabContainer, { props: { panes: this.panes } })
+    ])
   }
 }
 </script>

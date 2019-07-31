@@ -11,7 +11,10 @@ export default {
     const contents = this.panes.map(pane => {
       return pane.active ? pane.$slots.default : null
     })
-    return <div className="tab-content">{contents}</div>
+
+    // return <div className="tab-content">{contents}</div>
+
+    return h('div', { class: 'tab-content' }, contents)
   }
 }
 </script>

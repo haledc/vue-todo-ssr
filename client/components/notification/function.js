@@ -10,19 +10,19 @@ let seed = 1
 
 /**
  * 在数组中删除实例
- * @param instance
+ * @param {VueConstructor} instance
  */
 const removeInstance = instance => {
   if (!instance) return
   const len = instances.length
   const index = instances.findIndex(item => item.id === instance.id)
 
-  // 在数组中删除实例
-  instances.splice(index, 1)
+  instances.splice(index, 1) // 在数组中删除实例
 
   if (len <= 1) return
-  // 删除实例的高度
-  const removeHeight = instance.vm.height
+
+  const removeHeight = instance.vm.height // 删除实例的高度
+
   // 最终的高度需要减去删除实例的高度和间隙
   for (let i = index; i < len - 1; i++) {
     instances[i].verticalOffset =
@@ -32,16 +32,14 @@ const removeInstance = instance => {
 
 /**
  * 输出方法
- * @param options
- * @return vm
+ * @param {Object} options
  */
 const notify = options => {
-  // 服务端渲染返回
-  if (Vue.prototype.$isServer) return
+  if (Vue.prototype.$isServer) return // 服务端渲染返回
 
   const { closeTime, ...rest } = options
 
-  // 通过构造函数生成vue实例
+  // 通过构造函数生成 vue 实例
   const instance = new NotificationConstructor({
     propsData: rest,
     data: {
@@ -52,36 +50,28 @@ const notify = options => {
   const id = `notification_${seed++}`
   instance.id = id
 
-  // 挂载但不指明目标，生产一个dom
-  instance.vm = instance.$mount()
+  instance.vm = instance.$mount() // 挂载但不指明目标，生成一个 dom
 
-  // 挂载后设置为可见
-  instance.vm.visible = true
+  instance.vm.visible = true // 挂载后设置为可见
 
-  // 加入到页面的dom中
-  document.body.appendChild(instance.vm.$el)
+  document.body.appendChild(instance.vm.$el) // 加入到页面的 dom 中
 
-  // 初始化底部间隙
-  let verticalOffset = 0
+  let verticalOffset = 0 // 初始化底部间隙
 
   instances.forEach(item => {
     verticalOffset += item.$el.offsetHeight + 16
   })
   verticalOffset += 16
 
-  // 赋值给实例
-  instance.verticalOffset = verticalOffset
+  instance.verticalOffset = verticalOffset // 赋值给实例
 
   instances.push(instance)
 
   // 实例监听事件
   instance.vm.$on('closed', () => {
-    // 在数组中删除实例
-    removeInstance(instance)
-    // 在dom中删除
-    document.body.removeChild(instance.vm.$el)
-    // 销毁实例
-    instance.vm.$destroy()
+    removeInstance(instance) // 在数组中删除实例
+    document.body.removeChild(instance.vm.$el) // 在 dom 中删除
+    instance.vm.$destroy() // 手动销毁实例
   })
 
   instance.vm.$on('close', function() {

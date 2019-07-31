@@ -2,8 +2,8 @@ import api from 'api'
 import notify from '../components/notification/function'
 import bus from '../utils/bus'
 
-const handleError = err => {
-  if (err.code === 401) {
+const handleError = error => {
+  if (error.code === 401) {
     notify({
       content: '请先登录！'
     })
@@ -18,13 +18,13 @@ export default {
       .getAllTodos()
       .then(data => {
         commit('endLoading')
-        // todo根据创建时间进行排序(ps:apiCloud的数据是无序的)
+        // ~ todo根据创建时间进行排序 (ps: apiCloud 的数据是无序的)
         data = data.sort((x, y) => x.createdAt < y.createdAt)
         commit('filterTodos', data)
       })
-      .catch(err => {
+      .catch(error => {
         commit('endLoading')
-        handleError(err)
+        handleError(error)
       })
   },
   addTodo: ({ commit }, todo) => {
@@ -36,9 +36,7 @@ export default {
           content: '你又多了一件事要做！'
         })
       })
-      .catch(err => {
-        handleError(err)
-      })
+      .catch(error => handleError(error))
   },
   updateTodo: ({ commit }, { id, todo }) => {
     api
@@ -49,9 +47,7 @@ export default {
           content: '你更新了一件事！'
         })
       })
-      .catch(err => {
-        handleError(err)
-      })
+      .catch(error => handleError(error))
   },
   deleteTodo: ({ commit }, id) => {
     api
@@ -62,9 +58,7 @@ export default {
           content: '你少了一件事要做！'
         })
       })
-      .catch(err => {
-        handleError(err)
-      })
+      .catch(error => handleError(error))
   },
   deleteCompleted: ({ commit, state }) => {
     const ids = state.todos.filter(t => t.completed).map(t => t.id)
@@ -76,9 +70,7 @@ export default {
           content: '清理一下！'
         })
       })
-      .catch(err => {
-        handleError(err)
-      })
+      .catch(error => handleError(error))
   },
   login: ({ commit }, { username, password }) => {
     return new Promise((resolve, reject) => {
@@ -91,9 +83,9 @@ export default {
           })
           resolve()
         })
-        .catch(err => {
-          handleError(err)
-          reject(err)
+        .catch(error => {
+          handleError(error)
+          reject(error)
         })
     })
   }

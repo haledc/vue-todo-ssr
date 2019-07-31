@@ -30,14 +30,16 @@ export default context => {
             })
           }
         })
-      ).then(() => {
-        // console.log(store.state)
-        // 把vue实例的meta方法赋值给服务端的context
-        context.meta = app.$meta()
-        context.state = store.state
-        context.router = router
-        resolve(app)
-      })
+      )
+        .then(() => {
+          // console.log(store.state)
+          // 把vue实例的meta方法赋值给服务端的context
+          context.meta = app.$meta()
+          context.state = store.state
+          context.router = router
+          resolve(app)
+        })
+        .catch(error => console.log(error))
     })
   })
 }

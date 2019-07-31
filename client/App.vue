@@ -2,17 +2,11 @@
   <div id="app">
     <div id="cover"></div>
     <Header />
-    <transition
-      name="fade"
-      mode="out-in"
-    >
+    <transition name="fade" mode="out-in">
       <router-view />
     </transition>
     <Footer />
-    <div
-      id="loading"
-      v-show="loading"
-    >
+    <div id="loading" v-show="loading">
       <loading />
     </div>
   </div>
@@ -54,5 +48,3 @@ export default {
 .fade-enter, .fade-leave-to
   opacity: 0
 </style>
-
-

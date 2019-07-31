@@ -1,10 +1,17 @@
-<template>
-  <div class="footer">
-    <div class="content">
-      Happy Everyday
-    </div>
-  </div>
-</template>
+<script>
+export default {
+  data() {
+    return {
+      content: 'Happy Everyday'
+    }
+  },
+  render(h) {
+    return h('div', { class: 'footer' }, [
+      h('div', { class: 'content' }, this.content)
+    ])
+  }
+}
+</script>
 
 <style lang="stylus" scoped>
 .footer

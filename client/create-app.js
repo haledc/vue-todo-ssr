@@ -1,5 +1,5 @@
 /**
- * 创建App
+ * 创建 App
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'

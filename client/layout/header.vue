@@ -1,17 +1,14 @@
-<template>
-  <div class="header">
-    <div class="title">
-      {{title}}
-    </div>
-  </div>
-</template>
-
 <script>
 export default {
   data() {
     return {
       title: 'My Todo'
     }
+  },
+  render(h) {
+    return h('div', { class: 'header' }, [
+      h('div', { class: 'title' }, this.title)
+    ])
   }
 }
 </script>
@@ -28,4 +25,3 @@ export default {
     line-height: 100px
     text-align: center
 </style>
-
