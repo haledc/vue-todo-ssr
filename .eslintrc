@@ -1,13 +1,12 @@
 {
-  "extends": "standard",
-  "plugins": [
-    "html"
-  ],
-  "parser": "babel-eslint",
-  "rules": {
-    "no-new": "off",
-    "space-before-function-paren": "off",
-    "indent": "off",
-    "no-trailing-spaces": "off"
-  }
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "extends": ["plugin:prettier/recommended", "plugin:vue/essential"],
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "sourceType": "module"
+  },
+  "rules": {}
 }
