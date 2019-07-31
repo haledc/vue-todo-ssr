@@ -10,7 +10,7 @@ const VueClientPlugin = require('vue-server-renderer/client-plugin')
 const isProd = process.env.NODE_ENV === 'production'
 
 const defaultPlugins = [
-  // 生成vue-ssr-client-manifest.json
+  // 生成 vue-ssr-client-manifest.json
   new VueClientPlugin()
 ]
 
@@ -39,8 +39,7 @@ if (isProd) {
     mode: 'production',
     entry: {
       app: path.join(__dirname, '../client/client-entry.js'),
-      // 指定的第三方块入口
-      vendor: ['vue', 'vue-router', 'vuex']
+      vendor: ['vue', 'vue-router', 'vuex'] // 指定的第三方块入口
     },
     output: {
       filename: 'static/js/[name].[chunkhash:8].js',
@@ -65,18 +64,25 @@ if (isProd) {
         }
       ]
     },
+    optimization: {
+      runtimeChunk: {
+        name: 'runtime'
+      },
+      splitChunks: {
+        chunks: 'all'
+      }
+    },
     plugins: defaultPlugins.concat([
-      // 提取css
+      // 提取 css
       new MiniCssExtractPlugin({
         filename: 'static/css/[name]-[contenthash:8].css',
         chunkFilename: 'static/css/[id]-[contenthash:8].css'
       }),
-      // 优化css
-      new OptimizeCSSAssentPlugin(),
+      new OptimizeCSSAssentPlugin(), // 压缩 css
       new HTMLPlugin({
         template: path.join(__dirname, 'template.html'),
         filename: 'index.html',
-        // 压缩html
+        // 压缩 html
         minify: {
           collapseWhitespace: true,
           removeComments: true,
@@ -89,7 +95,7 @@ if (isProd) {
   // 开发环境
   clientConfig = merge(baseConfig, {
     mode: 'development',
-    devtool: '#cheap-module-eval-source-map',
+    devtool: 'cheap-module-eval-source-map',
     module: {
       rules: [
         {

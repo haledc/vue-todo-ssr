@@ -5,18 +5,15 @@ const baseConfig = require('./webpack.base.config')
 const VueServerPlugin = require('vue-server-renderer/server-plugin')
 
 const serverConfig = merge(baseConfig, {
-  // 目标
-  target: 'node',
+  target: 'node', // 目标
   entry: path.join(__dirname, '../client/server-entry.js'),
   devtool: 'source-map',
   output: {
-    // commonjs模块
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'commonjs2', // commonjs 模块
     filename: 'server-bundle.js',
     path: path.join(__dirname, '../server-dist')
   },
-  // 外置化模块，提高服务器构建速度
-  externals: Object.keys(require('../package').dependencies),
+  externals: Object.keys(require('../package').dependencies), // 外置化模块，提高服务器构建速度
   resolve: {
     alias: {
       api: path.join(__dirname, '../client/api/server-api.js')
