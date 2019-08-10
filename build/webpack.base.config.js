@@ -1,16 +1,14 @@
 const path = require('path')
-const createVueLoaderOptions = require('./vue-loader.config')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 const isProd = process.env.NODE_ENV === 'production'
 
 const baseConfig = {
-  target: 'web',
   entry: path.join(__dirname, '../client/client-entry.js'),
   output: {
     filename: 'bundle.[hash:8].js',
-    path: path.join(__dirname, '../client-dist'),
-    publicPath: 'http://127.0.0.1:8080/client-dist/'
+    path: path.join(__dirname, '../dist-client'),
+    publicPath: 'http://127.0.0.1:8080/dist-client/'
   },
   resolve: {
     extensions: ['.vue', '.js', '.json', '.jsx']
@@ -21,12 +19,16 @@ const baseConfig = {
         test: /\.(vue|js|jsx)$/,
         loader: 'eslint-loader',
         exclude: /node_modules/,
-        enforce: 'pre' // 先处理
+        enforce: 'pre'
       },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: createVueLoaderOptions(isProd)
+        options: {
+          compilerOptions: {
+            preserveWhitespace: false // 删除多余空格
+          }
+        }
       },
       {
         test: /\.(js|jsx)$/,
@@ -65,4 +67,43 @@ const baseConfig = {
   plugins: [new VueLoaderPlugin()]
 }
 
-module.exports = baseConfig
+const stylusRule = {
+  test: /\.styl(us)?$/,
+  oneOf: [
+    {
+      resourceQuery: /module/,
+      use: [
+        'vue-style-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            modules: true,
+            localIdentName: '[local]_[hash:base64:8]'
+          }
+        },
+        {
+          loader: 'postcss-loader',
+          options: {
+            sourceMap: true
+          }
+        },
+        'stylus-loader'
+      ]
+    },
+    {
+      use: [
+        'vue-style-loader',
+        'css-loader',
+        {
+          loader: 'postcss-loader',
+          options: {
+            sourceMap: true
+          }
+        },
+        'stylus-loader'
+      ]
+    }
+  ]
+}
+
+module.exports = { baseConfig, stylusRule }

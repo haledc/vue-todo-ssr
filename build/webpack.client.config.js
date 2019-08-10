@@ -4,25 +4,22 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssentPlugin = require('optimize-css-assets-webpack-plugin')
-const baseConfig = require('./webpack.base.config')
+const { baseConfig, stylusRule } = require('./webpack.base.config')
 const VueClientPlugin = require('vue-server-renderer/client-plugin')
 
 const isProd = process.env.NODE_ENV === 'production'
 
-const defaultPlugins = [
-  // 生成 vue-ssr-client-manifest.json
-  new VueClientPlugin()
-]
+const defaultPlugins = [new VueClientPlugin()]
 
 const devServer = {
+  host: '127.0.0.1',
   port: 8080,
-  host: '0.0.0.0',
   overlay: {
     errors: true
   },
   headers: { 'Access-Control-Allow-Origin': '*' },
   historyApiFallback: {
-    index: '/client-dist/index.html'
+    index: '/dist-client/index.html'
   },
   hot: true,
   proxy: {
@@ -39,27 +36,50 @@ if (isProd) {
     mode: 'production',
     entry: {
       app: path.join(__dirname, '../client/client-entry.js'),
-      vendor: ['vue', 'vue-router', 'vuex'] // 指定的第三方块入口
+      vendor: ['vue', 'vue-router', 'vuex']
     },
     output: {
       filename: 'static/js/[name].[chunkhash:8].js',
-      publicPath: '/client-dist/'
+      publicPath: '/dist-client/'
     },
     module: {
       rules: [
         {
           test: /\.styl(us)?$/,
-          use: [
-            'vue-style-loader',
-            MiniCssExtractPlugin.loader,
-            'css-loader',
+          oneOf: [
             {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true
-              }
+              resourceQuery: /module/,
+              use: [
+                MiniCssExtractPlugin.loader,
+                {
+                  loader: 'css-loader',
+                  options: {
+                    modules: true,
+                    localIdentName: '[local]_[hash:base64:8]'
+                  }
+                },
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    sourceMap: true
+                  }
+                },
+                'stylus-loader'
+              ]
             },
-            'stylus-loader'
+            {
+              use: [
+                MiniCssExtractPlugin.loader,
+                'css-loader',
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    sourceMap: true
+                  }
+                },
+                'stylus-loader'
+              ]
+            }
           ]
         }
       ]
@@ -97,22 +117,7 @@ if (isProd) {
     mode: 'development',
     devtool: 'cheap-module-eval-source-map',
     module: {
-      rules: [
-        {
-          test: /\.styl(us)?$/,
-          use: [
-            'vue-style-loader',
-            'css-loader',
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true
-              }
-            },
-            'stylus-loader'
-          ]
-        }
-      ]
+      rules: [stylusRule]
     },
     devServer,
     plugins: defaultPlugins.concat([
@@ -124,12 +129,10 @@ if (isProd) {
   })
 }
 
-clientConfig = merge(clientConfig, {
+module.exports = merge(clientConfig, {
   resolve: {
     alias: {
-      api: path.join(__dirname, '../client/api/client-api.js')
+      api: path.resolve(__dirname, '../client/api/client-api.js')
     }
   }
 })
-
-module.exports = clientConfig
