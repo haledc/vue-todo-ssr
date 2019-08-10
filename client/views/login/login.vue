@@ -70,7 +70,7 @@ export default {
   align-items: flex-start
   width: 350px
   margin: 0 auto
-  padding: 20px
+  padding: 20px 0
   background-color: #fff
 
   h1
@@ -79,13 +79,13 @@ export default {
 
 .login-input
   appearance: none
-  padding: 0 10px
   line-height: 30px
   margin-bottom: 20px
   border: 1px solid #aaa
   width: 100%
   border-radius: 0
   box-shadow: 0 0 0
+  text-indent: 5px
 
 .login-btn
   appearance: none

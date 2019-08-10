@@ -11,7 +11,7 @@
           <input
             type="text"
             class="text"
-            placeholder="event.g. what do you want to?"
+            placeholder="what do you want to?"
             @keyup.enter="handleTodo"
           />
         </div>
@@ -141,9 +141,9 @@ export default {
         flex: 1
         height: 40px
         border-radius: 5px
-        padding: 0 20px
         margin-right: 20px
         border-color: none
+        text-indent: 10px
 
         &:focus
           outline-color: #fff
