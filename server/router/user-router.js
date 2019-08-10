@@ -2,6 +2,7 @@ const Router = require('koa-router')
 
 const router = new Router({ prefix: '/user' })
 
+// 登录业务
 router.post('/login', async ctx => {
   const user = ctx.request.body
 

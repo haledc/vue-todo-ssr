@@ -10,12 +10,10 @@ module.exports = async (ctx, renderer, template) => {
   // 获得上下文
   // 通过 session 获得 user 的信息
   const context = { url: ctx.path, user: ctx.session.user }
-  // console.log('----------------', context)
 
   try {
     // 渲染上下文的 String
     const appString = await renderer.renderToString(context)
-    // console.log('appString------------', appString)
 
     // redirect
     const routerPath = context.router.currentRoute.fullPath
@@ -26,16 +24,12 @@ module.exports = async (ctx, renderer, template) => {
     // 获取 meta 信息
     const { title } = context.meta.inject()
 
-    // 把渲染后的代码手动注入到 ejs 模板中完成展示
+    // 把渲染后的字符串手动注入到 ejs 模板中
     const html = ejs.render(template, {
       title: title.text(),
-      // 渲染后的字符串
       appString,
-      // 渲染后的样式
       style: context.renderStyles(),
-      // 渲染后的模板
       scripts: context.renderScripts(),
-      // 渲染后的数据
       initialState: context.renderState()
     })
 

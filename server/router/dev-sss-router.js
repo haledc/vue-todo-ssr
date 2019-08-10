@@ -10,7 +10,7 @@ const webpack = require('webpack')
 const fs = require('fs')
 
 const serverConfig = require('../../build/webpack.server.config')
-const serverRender = require('./server-render-func')
+const serverRender = require('./ssr-render')
 
 // 生成 mfs 对象
 const mfs = new MemoryFS()
@@ -53,15 +53,15 @@ const handleSSR = async ctx => {
     return
   }
 
-  // 从 devServer 中获取 clientManifest， 通过 axios 获取
+  // 从 devServer 中获取 clientManifest
   const clientManifestResponse = await axios.get(
-    'http://127.0.0.1:8080/client-dist/vue-ssr-client-manifest.json'
+    'http://127.0.0.1:8080/dist-client/vue-ssr-client-manifest.json'
   )
   const clientManifest = clientManifestResponse.data
 
   // 从硬盘中读取 template
   const template = fs.readFileSync(
-    path.join(__dirname, '../server.template.ejs'),
+    path.join(__dirname, '../ssr.template.ejs'),
     'utf-8'
   )
 
@@ -71,7 +71,7 @@ const handleSSR = async ctx => {
     clientManifest
   })
 
-  // 渲染的具体方法 (生产和开发环境共用)
+  // 渲染成字符串的方法 (生产和开发环境共用)
   await serverRender(ctx, renderer, template)
 }
 

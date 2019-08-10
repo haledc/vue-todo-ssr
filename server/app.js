@@ -27,7 +27,6 @@ app.use(
 
 app.use(async (ctx, next) => {
   try {
-    console.log(`request with path is ${ctx.path}`)
     await next()
   } catch (error) {
     console.log(error)
@@ -57,9 +56,9 @@ app.use(bodyParser())
 app.use(logger())
 app.use(routers.routes()).use(routers.allowedMethods())
 
-const HOST = process.env.HOST || '0.0.0.0'
+const HOST = process.env.HOST || '127.0.0.1'
 const PORT = process.env.PORT || 8081
 
 app.listen(PORT, HOST, () => {
-  console.log(`Server started at ${HOST}:${PORT}`)
+  console.log(`Server running on http://${HOST}:${PORT}`)
 })
