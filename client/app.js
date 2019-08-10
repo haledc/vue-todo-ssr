@@ -12,13 +12,11 @@ import createStore from './store'
 import Notification from './components/notification'
 import Tabs from './components/tabs'
 
-Vue.use(VueRouter)
-Vue.use(Vuex)
 Vue.use(Meta)
 Vue.use(Notification)
 Vue.use(Tabs)
 
-export default function createApp() {
+export function createApp() {
   const router = createRouter()
   const store = createStore()
 

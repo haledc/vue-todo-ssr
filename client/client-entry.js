@@ -1,7 +1,7 @@
 /**
  * 浏览器渲染入口
  */
-import createApp from './create-app'
+import { createApp } from './app.js'
 import bus from './utils/bus'
 
 const { app, router, store } = createApp()

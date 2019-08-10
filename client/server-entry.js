@@ -1,7 +1,7 @@
 /**
  * 服务端渲染入口
  */
-import createApp from './create-app'
+import { createApp } from './app.js'
 
 export default context => {
   return new Promise((resolve, reject) => {
@@ -32,8 +32,6 @@ export default context => {
         })
       )
         .then(() => {
-          // console.log(store.state)
-          // 把vue实例的meta方法赋值给服务端的context
           context.meta = app.$meta()
           context.state = store.state
           context.router = router
