@@ -1,19 +1,22 @@
 const path = require('path')
-const HTMLPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssentPlugin = require('optimize-css-assets-webpack-plugin')
-const { baseConfig, stylusRule } = require('./webpack.base.config')
 const VueClientPlugin = require('vue-server-renderer/client-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const { baseConfig, stylusRule } = require('./webpack.base.config')
 
 const isProd = process.env.NODE_ENV === 'production'
 
-const defaultPlugins = [new VueClientPlugin()]
+const commonPlugins = [new VueClientPlugin()]
 
 const devServer = {
   host: '127.0.0.1',
   port: 8080,
+  hot: true,
+  hotOnly: true,
   overlay: {
     errors: true
   },
@@ -21,7 +24,6 @@ const devServer = {
   historyApiFallback: {
     index: '/dist-client/index.html'
   },
-  hot: true,
   proxy: {
     '/api/*': 'http://127.0.0.1:8081',
     '/user/*': 'http://127.0.0.1:8081'
@@ -34,12 +36,12 @@ if (isProd) {
   // 生产环境
   clientConfig = merge(baseConfig, {
     mode: 'production',
-    entry: {
-      app: path.join(__dirname, '../client/client-entry.js'),
-      vendor: ['vue', 'vue-router', 'vuex']
-    },
+    devtool: 'cheap-module-source-map',
+    entry: path.resolve(__dirname, '../client/client-entry.js'),
     output: {
-      filename: 'static/js/[name].[chunkhash:8].js',
+      path: path.resolve(__dirname, '../dist-client'),
+      filename: 'static/js/[name].[contenthash:8].js',
+      chunkFilename: 'static/js/[name].thunk.[contenthash:8].js',
       publicPath: '/dist-client/'
     },
     module: {
@@ -55,7 +57,7 @@ if (isProd) {
                   loader: 'css-loader',
                   options: {
                     modules: true,
-                    localIdentName: '[local]_[hash:base64:8]'
+                    importLoaders: 2
                   }
                 },
                 {
@@ -70,7 +72,12 @@ if (isProd) {
             {
               use: [
                 MiniCssExtractPlugin.loader,
-                'css-loader',
+                {
+                  loader: 'css-loader',
+                  options: {
+                    importLoaders: 2
+                  }
+                },
                 {
                   loader: 'postcss-loader',
                   options: {
@@ -92,15 +99,16 @@ if (isProd) {
         chunks: 'all'
       }
     },
-    plugins: defaultPlugins.concat([
+    plugins: commonPlugins.concat([
       // 提取 css
       new MiniCssExtractPlugin({
-        filename: 'static/css/[name]-[contenthash:8].css',
-        chunkFilename: 'static/css/[id]-[contenthash:8].css'
+        filename: 'static/css/[name].[contenthash:8].css',
+        chunkFilename: 'static/css/[name].chunk.[contenthash:8].css'
       }),
       new OptimizeCSSAssentPlugin(), // 压缩 css
-      new HTMLPlugin({
-        template: path.join(__dirname, 'template.html'),
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, 'template.html'),
         filename: 'index.html',
         // 压缩 html
         minify: {
@@ -120,10 +128,11 @@ if (isProd) {
       rules: [stylusRule]
     },
     devServer,
-    plugins: defaultPlugins.concat([
+    plugins: commonPlugins.concat([
       new webpack.HotModuleReplacementPlugin(),
-      new HTMLPlugin({
-        template: path.join(__dirname, 'template.html')
+      new HtmlWebpackPlugin({
+        template: path.resolve(__dirname, 'template.html'),
+        filename: 'index.html'
       })
     ])
   })

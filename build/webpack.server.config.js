@@ -1,14 +1,13 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const merge = require('webpack-merge')
-const { baseConfig, stylusRule } = require('./webpack.base.config')
 const VueServerPlugin = require('vue-server-renderer/server-plugin')
-
-const isProd = process.env.NODE_ENV === 'production'
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const { baseConfig, stylusRule } = require('./webpack.base.config')
 
 const serverConfig = merge(baseConfig, {
   target: 'node',
-  mode: isProd ? 'production' : 'development',
+  mode: 'production',
   entry: path.join(__dirname, '../client/server-entry.js'),
   devtool: 'source-map',
   output: {
@@ -26,10 +25,11 @@ const serverConfig = merge(baseConfig, {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'static/css/[name]-[contenthash:8].css',
-      chunkFilename: 'static/css/[id]-[contenthash:8].css'
+      filename: 'static/css/[name].[contenthash:8].css',
+      chunkFilename: 'static/css/[name].chunk.[contenthash:8].css'
     }),
-    new VueServerPlugin()
+    new VueServerPlugin(),
+    new CleanWebpackPlugin()
   ]
 })
 

@@ -16,8 +16,11 @@
           "@babel/preset-env",
           {
             "targets": {
-              "browsers": ["last 2 versions", "safari >= 7"]
-            }
+              "chrome": "67",
+              "ie": "11"
+            },
+            "useBuiltIns": "usage",
+            "corejs": 3
           }
         ]
       ]

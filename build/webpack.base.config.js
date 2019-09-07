@@ -4,10 +4,11 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const isProd = process.env.NODE_ENV === 'production'
 
 const baseConfig = {
-  entry: path.join(__dirname, '../client/client-entry.js'),
+  entry: path.resolve(__dirname, '../client/client-entry.js'),
   output: {
-    filename: 'bundle.[hash:8].js',
-    path: path.join(__dirname, '../dist-client'),
+    path: path.resolve(__dirname, '../dist-client'),
+    filename: 'static/js/[name].[hash:8].js',
+    chunkFilename: 'static/js/[name].thunk.[hash:8].js',
     publicPath: 'http://127.0.0.1:8080/dist-client/'
   },
   resolve: {
@@ -78,7 +79,7 @@ const stylusRule = {
           loader: 'css-loader',
           options: {
             modules: true,
-            localIdentName: '[local]_[hash:base64:8]'
+            importLoaders: 2
           }
         },
         {
@@ -93,7 +94,12 @@ const stylusRule = {
     {
       use: [
         'vue-style-loader',
-        'css-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            importLoaders: 2
+          }
+        },
         {
           loader: 'postcss-loader',
           options: {
