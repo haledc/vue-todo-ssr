@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Login from '../views/login/login'
 
 Vue.use(Router)
 
@@ -13,13 +14,12 @@ export default function createRouter() {
       },
       {
         path: '/login',
-        component: () =>
-          import(/* webpackChunkName: "login-view" */ '../views/login/login')
+        component: Login
       },
       {
         path: '/app',
         component: () =>
-          import(/* webpackChunkName: "todo-view" */ '../views/todo/todo')
+          import(/* webpackChunkName: 'todo' */ '../views/todo/todo')
       }
     ]
   })
