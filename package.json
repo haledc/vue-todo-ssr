@@ -1,6 +1,8 @@
 {
   "name": "vue-todo-ssr",
   "version": "2.0.0",
+  "author": "Hale",
+  "license": "MIT",
   "description": "a vue todo demo for server side render",
   "main": "index.js",
   "scripts": {
@@ -14,11 +16,25 @@
     "clear": "rimraf dist-client && rimraf dist-server",
     "lint": "eslint --ext .js --ext .jsx --ext .vue client/",
     "lint:fix": "eslint --fix --ext .js --ext .jsx --ext .vue client/",
-    "precommit": "yarn lint:fix",
+    "precommit": "lint-staged",
     "pm2": "pm2 start pm2.yml --env production"
   },
-  "author": "Hale",
-  "license": "MIT",
+  "lint-staged": {
+    "{src,test}/**/*.(js|vue)": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
   "dependencies": {
     "axios": "^0.18.1",
     "core-js": "^3.2.1",
@@ -42,15 +58,19 @@
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/polyfill": "^7.6.0",
     "@babel/preset-env": "^7.5.5",
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
     "@vue/babel-plugin-transform-vue-jsx": "^1.0.0",
     "autoprefixer": "9.6.1",
     "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
+    "commitizen": "^4.0.3",
     "concurrently": "^4.1.1",
     "cross-env": "5.2.0",
     "css-loader": "^3.2.0",
+    "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-loader": "^2.2.1",
@@ -58,7 +78,8 @@
     "eslint-plugin-vue": "^5.2.3",
     "file-loader": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",
-    "husky": "^3.0.3",
+    "husky": "^3.0.5",
+    "lint-staged": "^9.2.5",
     "memory-fs": "^0.4.1",
     "mini-css-extract-plugin": "^0.8.0",
     "nodemon": "^1.19.1",
