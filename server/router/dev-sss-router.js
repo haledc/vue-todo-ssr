@@ -1,7 +1,7 @@
 /**
  * 开发环境服务端渲染路由
  */
-const Router = require('koa-router')
+const Router = require('@koa/router')
 const axios = require('axios')
 const MemoryFS = require('memory-fs')
 const path = require('path')

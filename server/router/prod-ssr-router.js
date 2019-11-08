@@ -3,7 +3,7 @@
  */
 const path = require('path')
 const fs = require('fs')
-const Router = require('koa-router')
+const Router = require('@koa/router')
 const { createBundleRenderer } = require('vue-server-renderer')
 
 const serverRender = require('./ssr-render')

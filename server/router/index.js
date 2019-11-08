@@ -1,4 +1,4 @@
-const Router = require('koa-router')
+const Router = require('@koa/router')
 const devRouter = require('./dev-sss-router')
 const prodRouter = require('./prod-ssr-router')
 const staticRouter = require('./static-router')

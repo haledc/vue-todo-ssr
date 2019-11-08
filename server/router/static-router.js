@@ -1,4 +1,4 @@
-const Router = require('koa-router')
+const Router = require('@koa/router')
 const send = require('koa-send')
 
 // 指向打包生成的静态资源文件
