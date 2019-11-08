@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const merge = require('webpack-merge')
 const VueServerPlugin = require('vue-server-renderer/server-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const { baseConfig, stylusRule } = require('./webpack.base.config')
+const { baseConfig, cssRule } = require('./webpack.base.config')
 
 const serverConfig = merge(baseConfig, {
   target: 'node',
@@ -16,7 +16,7 @@ const serverConfig = merge(baseConfig, {
   },
   externals: Object.keys(require('../package').dependencies),
   module: {
-    rules: [stylusRule]
+    rules: [cssRule]
   },
   resolve: {
     alias: {

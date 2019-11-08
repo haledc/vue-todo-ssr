@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssentPlugin = require('optimize-css-assets-webpack-plugin')
 const VueClientPlugin = require('vue-server-renderer/client-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const { baseConfig, stylusRule } = require('./webpack.base.config')
+const { baseConfig, cssRule } = require('./webpack.base.config')
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -47,7 +47,7 @@ if (isProd) {
     module: {
       rules: [
         {
-          test: /\.styl(us)?$/,
+          test: /\.(scss|css)$/,
           oneOf: [
             {
               resourceQuery: /module/,
@@ -66,7 +66,7 @@ if (isProd) {
                     sourceMap: true
                   }
                 },
-                'stylus-loader'
+                'sass-loader'
               ]
             },
             {
@@ -84,7 +84,7 @@ if (isProd) {
                     sourceMap: true
                   }
                 },
-                'stylus-loader'
+                'sass-loader'
               ]
             }
           ]
@@ -125,7 +125,7 @@ if (isProd) {
     mode: 'development',
     devtool: 'cheap-module-eval-source-map',
     module: {
-      rules: [stylusRule]
+      rules: [cssRule]
     },
     devServer,
     plugins: commonPlugins.concat([

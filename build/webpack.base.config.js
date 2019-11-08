@@ -68,8 +68,8 @@ const baseConfig = {
   plugins: [new VueLoaderPlugin()]
 }
 
-const stylusRule = {
-  test: /\.styl(us)?$/,
+const cssRule = {
+  test: /\.(scss|css)$/,
   oneOf: [
     {
       resourceQuery: /module/,
@@ -88,7 +88,7 @@ const stylusRule = {
             sourceMap: true
           }
         },
-        'stylus-loader'
+        'sass-loader'
       ]
     },
     {
@@ -106,10 +106,10 @@ const stylusRule = {
             sourceMap: true
           }
         },
-        'stylus-loader'
+        'sass-loader'
       ]
     }
   ]
 }
 
-module.exports = { baseConfig, stylusRule }
+module.exports = { baseConfig, cssRule }
