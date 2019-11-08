@@ -13,15 +13,17 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-.header
-  margin: 0 auto
-  height: 100px
+<style lang="scss" scoped>
+.header {
+  margin: 0 auto;
+  height: 100px;
 
-  .title
-    font-size: 50px
-    font-weight: bolder
-    font-family: 'Courier New'
-    line-height: 100px
-    text-align: center
+  .title {
+    font-size: 50px;
+    font-weight: bolder;
+    font-family: 'Courier New';
+    line-height: 100px;
+    text-align: center;
+  }
+}
 </style>

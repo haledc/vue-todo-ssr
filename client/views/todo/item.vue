@@ -30,48 +30,57 @@ export default {
 }
 </script>
 
-<style scoped lang="stylus">
-.item
-  display: flex
-  width: auto
-  height: 40px
-  position: relative
-  border-radius: 5px
-  border: 1px solid #ccc
-  margin: 0 20px 10px
+<style scoped lang="scss">
+.item {
+  display: flex;
+  width: auto;
+  height: 40px;
+  position: relative;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin: 0 20px 10px;
 
-  &.finished
-    .content
-      text-decoration: line-through
+  &.finished {
+    .content {
+      text-decoration: line-through;
+    }
+  }
 
-  .checkbox
-    flex: 0 0 20px
-    width: 20px
-    height: 40px
-    line-height: 40px
-    padding: 0 10px
+  .checkbox {
+    flex: 0 0 20px;
+    width: 20px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px;
 
-    input
-      width: 20px
-      height: 34px
+    input {
+      width: 20px;
+      height: 34px;
+    }
+  }
 
-  .content
-    flex: 1
-    display: inline-block
-    line-height: 40px
+  .content {
+    flex: 1;
+    display: inline-block;
+    line-height: 40px;
+  }
 
-  .operation
-    flex: 0 0 80px
-    width: 80px
-    position: absolute
-    display: inline-block
-    line-height: 40px
-    right: 0
-    text-align: center
-    padding: 0 10px
+  .operation {
+    flex: 0 0 80px;
+    width: 80px;
+    position: absolute;
+    display: inline-block;
+    line-height: 40px;
+    right: 0;
+    text-align: center;
+    padding: 0 10px;
 
-    span
-      &:hover
-        cursor: pointer
-        color: #f00
+    span {
+      &:hover {
+        cursor: pointer;
+        color: #f00;
+      }
+    }
+  }
+}
 </style>

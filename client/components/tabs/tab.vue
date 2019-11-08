@@ -44,18 +44,21 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-.tab
-  list-style: none
-  line-height: 40px
-  margin-right: 30px
-  position: relative
-  bottom: -2px
-  cursor: pointer
+<style lang="scss" scoped>
+.tab {
+  list-style: none;
+  line-height: 40px;
+  margin-right: 30px;
+  position: relative;
+  bottom: -2px;
+  cursor: pointer;
 
-  &.active
-    border-bottom: 2px solid blue
+  &.active {
+    border-bottom: 2px solid blue;
+  }
 
-  &:last-child
-    margin-right: 0
+  &:last-child {
+    margin-right: 0;
+  }
+}
 </style>

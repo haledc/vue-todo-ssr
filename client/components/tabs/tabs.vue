@@ -38,11 +38,12 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-.tabs-header
-  display: flex
-  list-style: none
-  margin: 0
-  padding: 0
-  border-bottom: 2px solid #ededed
+<style lang="scss" scoped>
+.tabs-header {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: 2px solid #ededed;
+}
 </style>

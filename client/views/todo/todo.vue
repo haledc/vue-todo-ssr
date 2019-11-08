@@ -114,40 +114,47 @@ export default {
 }
 </script>
 
-<style scoped lang="stylus">
-.todo
-  width: 80%
-  margin: 0 auto
-  background: rgb(199, 237, 203)
-  border-radius: 2px
-  font-family: 'Courier New'
+<style scoped lang="scss">
+.todo {
+  width: 80%;
+  margin: 0 auto;
+  background: rgb(199, 237, 203);
+  border-radius: 2px;
+  font-family: 'Courier New';
 
-  .tab-container
-    padding: 0 20px
+  .tab-container {
+    padding: 0 20px;
+  }
 
-  .content-wrapper
-    margin: 20px 0
-    box-sizing: border-box
+  .content-wrapper {
+    margin: 20px 0;
+    box-sizing: border-box;
 
-    .input
-      height: 40px
-      text-align: center
-      font-family: 'Courier New'
-      display: flex
-      padding: 0 0 0 20px
-      font-size: 20px
+    .input {
+      height: 40px;
+      text-align: center;
+      font-family: 'Courier New';
+      display: flex;
+      padding: 0 0 0 20px;
+      font-size: 20px;
 
-      .text
-        flex: 1
-        height: 40px
-        border-radius: 5px
-        margin-right: 20px
-        border-color: none
-        text-indent: 10px
+      .text {
+        flex: 1;
+        height: 40px;
+        border-radius: 5px;
+        margin-right: 20px;
+        border-color: none;
+        text-indent: 10px;
 
-        &:focus
-          outline-color: #fff
+        &:focus {
+          outline-color: #fff;
+        }
+      }
+    }
 
-    .item-wrapper
-      margin-top: 20px
+    .item-wrapper {
+      margin-top: 20px;
+    }
+  }
+}
 </style>
