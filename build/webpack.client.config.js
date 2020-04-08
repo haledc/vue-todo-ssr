@@ -56,7 +56,9 @@ if (isProd) {
                 {
                   loader: 'css-loader',
                   options: {
-                    modules: true,
+                    modules: {
+                      localIdentName: `[name]_[local]_[hash:base64:5]`
+                    },
                     importLoaders: 2
                   }
                 },

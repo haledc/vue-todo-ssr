@@ -37,12 +37,13 @@ const baseConfig = {
         exclude: /node_modules/
       },
       {
-        test: /\.(git|png|jpe?g|svg)$/,
+        test: /\.(git|png|jpe?g|svg)$/i,
         loader: 'url-loader',
         options: {
           limit: 10240,
           name: '[name].[hash:8].[ext]',
-          outputPath: 'images/'
+          outputPath: 'images/',
+          esModule: false
         }
       },
       {
@@ -78,7 +79,9 @@ const cssRule = {
         {
           loader: 'css-loader',
           options: {
-            modules: true,
+            modules: {
+              localIdentName: `[name]_[local]_[hash:base64:5]`
+            },
             importLoaders: 2
           }
         },
